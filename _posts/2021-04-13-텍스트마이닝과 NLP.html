@@ -1,0 +1,659 @@
+---
+layout: post
+title: "[DL] 03. 텍스트마이닝과 NLP 개요"
+subtitle: "NLP와 텍스트마이닝 정의 및 절차, 라이브러리 설명"
+date: 2021-04-13 10:45:13
+background: '/img/posts/DL_01_텍스트마이닝사진.png'
+categories: ['Deep Learning']
+---
+
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>2021-04-09-텍스트분석</title><style>
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, YuMincho, "Yu Mincho", "Hiragino Mincho ProN", "Hiragino Mincho Pro", "Songti TC", "Songti SC", "SimSun", "Nanum Myeongjo", NanumMyeongjo, Batang, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, YuMincho, "Yu Mincho", "Hiragino Mincho ProN", "Hiragino Mincho Pro", "Songti TC", "Songti SC", "SimSun", "Nanum Myeongjo", NanumMyeongjo, Batang, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.highlight-default {
+}
+.highlight-gray {
+	color: rgb(155,154,151);
+}
+.highlight-brown {
+	color: rgb(100,71,58);
+}
+.highlight-orange {
+	color: rgb(217,115,13);
+}
+.highlight-yellow {
+	color: rgb(223,171,1);
+}
+.highlight-teal {
+	color: rgb(15,123,108);
+}
+.highlight-blue {
+	color: rgb(11,110,153);
+}
+.highlight-purple {
+	color: rgb(105,64,165);
+}
+.highlight-pink {
+	color: rgb(173,26,114);
+}
+.highlight-red {
+	color: rgb(224,62,62);
+}
+.highlight-gray_background {
+	background: rgb(235,236,237);
+}
+.highlight-brown_background {
+	background: rgb(233,229,227);
+}
+.highlight-orange_background {
+	background: rgb(250,235,221);
+}
+.highlight-yellow_background {
+	background: rgb(251,243,219);
+}
+.highlight-teal_background {
+	background: rgb(221,237,234);
+}
+.highlight-blue_background {
+	background: rgb(221,235,241);
+}
+.highlight-purple_background {
+	background: rgb(234,228,242);
+}
+.highlight-pink_background {
+	background: rgb(244,223,235);
+}
+.highlight-red_background {
+	background: rgb(251,228,228);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(55, 53, 47, 0.6);
+	fill: rgba(55, 53, 47, 0.6);
+}
+.block-color-brown {
+	color: rgb(100,71,58);
+	fill: rgb(100,71,58);
+}
+.block-color-orange {
+	color: rgb(217,115,13);
+	fill: rgb(217,115,13);
+}
+.block-color-yellow {
+	color: rgb(223,171,1);
+	fill: rgb(223,171,1);
+}
+.block-color-teal {
+	color: rgb(15,123,108);
+	fill: rgb(15,123,108);
+}
+.block-color-blue {
+	color: rgb(11,110,153);
+	fill: rgb(11,110,153);
+}
+.block-color-purple {
+	color: rgb(105,64,165);
+	fill: rgb(105,64,165);
+}
+.block-color-pink {
+	color: rgb(173,26,114);
+	fill: rgb(173,26,114);
+}
+.block-color-red {
+	color: rgb(224,62,62);
+	fill: rgb(224,62,62);
+}
+.block-color-gray_background {
+	background: rgb(235,236,237);
+}
+.block-color-brown_background {
+	background: rgb(233,229,227);
+}
+.block-color-orange_background {
+	background: rgb(250,235,221);
+}
+.block-color-yellow_background {
+	background: rgb(251,243,219);
+}
+.block-color-teal_background {
+	background: rgb(221,237,234);
+}
+.block-color-blue_background {
+	background: rgb(221,235,241);
+}
+.block-color-purple_background {
+	background: rgb(234,228,242);
+}
+.block-color-pink_background {
+	background: rgb(244,223,235);
+}
+.block-color-red_background {
+	background: rgb(251,228,228);
+}
+.select-value-color-default { background-color: rgba(206,205,202,0.5); }
+.select-value-color-gray { background-color: rgba(155,154,151, 0.4); }
+.select-value-color-brown { background-color: rgba(140,46,0,0.2); }
+.select-value-color-orange { background-color: rgba(245,93,0,0.2); }
+.select-value-color-yellow { background-color: rgba(233,168,0,0.2); }
+.select-value-color-green { background-color: rgba(0,135,107,0.2); }
+.select-value-color-blue { background-color: rgba(0,120,223,0.2); }
+.select-value-color-purple { background-color: rgba(103,36,222,0.2); }
+.select-value-color-pink { background-color: rgba(221,0,129,0.2); }
+.select-value-color-red { background-color: rgba(255,0,26,0.2); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="f6b3fd13-ccb4-45f8-9fb5-1270e027e033" class="page sans"><header><h1 class="page-title">2021-04-09-텍스트분석</h1></header><div class="page-body"><blockquote id="ae070def-9cad-4749-ac1d-5938e02d1f5b" class="">요즘 세상이 참 많이 신기해졌다. 내가 쓴 글이 어떠한 감정을 내포하고 있는지도 기계가 파악하니 말이다. 이렇게 기술이 발전하기까지에는, 정말 대단한 분들의 언어 분석 연구가 있었기에 가능하다고 생각한다. 이러한 분석의 결실로써, 텍스트마이닝이 생겨나게 됐다.
+오늘은 <strong>텍스트마이닝에 대한 개요</strong>를 알아보고자 한다.</blockquote><h1 id="5a472941-7f94-4c49-bd8f-731818da21d0" class="">텍스트마이닝과 NLP</h1><p id="fb0d27b9-f9b5-4858-949f-7ed267d90a89" class="">
+</p><h2 id="6b90b8b2-cad8-406c-bc04-108df8e2e858" class="">NLP의 정의</h2><h3 id="a971f34f-defd-4a7c-beeb-bb6a40e33916" class="">NLP와 텍스트마이닝</h3><p id="7cbc9f8b-c88e-409d-a673-2a87f5425f47" class="">NLP란, Natural Language Processing (자연언어 처리)를 의미한다.
+본질적으로 특수한 언어 분석을 수행하는 텍스트 마이닝의 구성 요소라도 볼 수 있다. <strong>인간 언어의 모호성을 해결</strong>하기 위한 방법론을 뜻한다.</p><p id="63a76b2a-3a28-46d2-b47d-f2200042ae39" class="">텍스트마이닝이란, 새로운 정보를 발견하기 위해 많은 양의 서면 자료를 조사하는 과정을 의미한다. 다양한 분석 방법을 사용하여 이를 수행하는데, 자연어 처리가 그 중 하나라고 볼 수 있다.</p><p id="cdaaa786-63f7-43bf-998d-04b2f3d27fca" class="">즉, <strong>텍스트마이닝은 텍스트에서 의미있는 정보를 추출하여 인사이트를 얻는 것</strong>이며, 이를 수행하기 위한 대표적 방법론이 NLP다. <strong>NLP는 기계가 인간의 언어를 해석</strong>하기 위한 방법이다.</p><p id="0047ba2a-3683-490d-853d-0e25d0093d43" class="">이는 놀라운 속도로 더욱 정교하게 발전하고 있다. 특히 공용어인 영어의 경우 비약한 발전을 이루고 있으며, 한글은 다양한 제약 조건(이하 설명 예정)때문에 비교적 어렵게 발전 중이다.</p><p id="54101a10-0a5c-4e32-9f7e-bef7bda388e0" class="">
+</p><h2 id="76e7caaf-76ad-4813-b8c9-1efa8b362b4b" class="">텍스트 분석의 주요 영역</h2><ul id="3cf3e661-b044-4bd5-b4d6-d1fc404e9885" class="bulleted-list"><li>텍스트 분류</li></ul><ul id="cdc10816-9118-4ad8-b220-89bfd306d608" class="bulleted-list"><li>감성 분석</li></ul><ul id="742e0161-2b46-4004-bd97-a3d1e76793a8" class="bulleted-list"><li>텍스트 요약</li></ul><ul id="fac52503-cee1-4add-a2f0-7b8089967d9a" class="bulleted-list"><li>텍스트 군집화와 유사도 측정</li></ul><p id="88ce0ac1-84b9-40a7-b447-45f8c2ef6e9b" class="">
+</p><h2 id="ba61851b-5378-437c-9832-fbf5f9279b63" class="">NLP 파이프라인</h2><p id="75a76855-a88e-4a21-8f43-0379c1da1ffe" class="">이처럼 다양한 영역에서 활용될 수 있는 텍스트 분석을 더욱 용이하게 하기 위해, 우리는 NLP 등의 파이프라인을 꼼꼼히 설계하고 처리해야 한다. NLP는 일반적으로 아래와 같은 순서에 맞춰져 분석이 진행된다.</p><p id="a884f945-97d5-45ec-b1bb-1d8a4e659209" class="">
+</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="a1826725-b851-4a41-bb08-af629373b1a5"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%">Raw Data 👉🏻Tokenization  👉🏻불용어(Stop Words)제거  👉🏻어간 추출(Stemming) or 표제어 추출(Lemmatization)  👉🏻 Nomalization(정규화) 👉🏻 Vector(벡터)화</div></figure><p id="4c06f5d9-383b-42ea-a18c-9a4c26bbe974" class="">이제 순차적으로 과정을 살펴보도록 하자. ( &#x27;Raw Data&#x27;의 경우, 말 그대로 raw data를 추출해 오는 것이므로 이 과정은 생략하겠다.)</p><p id="3ea1747d-b7f6-4020-97c3-a6118c96277b" class="">
+</p><h3 id="4e62d228-0978-4779-b947-e993dda1b4f4" class=""><strong>Tokenization</strong></h3><p id="469f8440-e79d-4737-87dd-4b473a53b3ec" class="">토큰화란, <strong>의미를 가지는 가장 낮은 단위의 문자로 나누는 것</strong>을 의미한다. 이는 보통 형태소, 단어로 이뤄질 수 있다.</p><p id="cad7a267-6541-48ec-8e20-42544647e9ab" class="">올바른 토큰화를 위해, 우리는 반드시 염두에 두어야 할 두 가지 아이디어가 존재한다. 바로, <strong>대소문자 통일</strong>과 <strong>문장 부호,공백 제거</strong>가 그것이다.</p><p id="344a87dd-4de3-458a-b4a7-b81b323501a9" class="">토큰화를 하기 위해서는, 첫 번째로 <strong>1) 한 문장을 리스트화하여 형태소 단위로 나눠야 한다.</strong> 그후, 갯수를 확인하거나 top rank token을 확인해본다. (이처럼 토큰의 현 상태를 확인하고 파악하는 작업이 생각보다 중요하다.)</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="3c88b6e0-5555-4e5f-a13a-6fb51983b842"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%">공백, 부호 등 제거를 위해서는 일반적으로 <strong>re 라이브러리</strong>를 활용한다.</div></figure><p id="58a90db7-34ef-4213-a058-e68ca7cd054b" class="">
+</p><h3 id="824aaccc-1aa1-4982-9d77-0fc4ce195551" class=""><strong>Stop Words</strong></h3><p id="f6979a15-bee8-4e18-a867-ea5be7dfebfd" class="">그후, <strong>2) 불용어(Stop Words)를 처리</strong>한다. 대부분의 NLP라이브러리에는 불용어를 처리하기 위한 불용어 사전이 존재하기 때문에, 불용어 사전에 포함된 데이터는 일괄 토큰 삭제를 해주는 방식으로 진행하면 된다. 이때, 추가적으로 불용어를 정의해서 제거할 수도 있다.</p><p id="848d979b-7150-4437-bc86-82544c81f257" class="">
+</p><h3 id="3790a374-537d-4bd8-8079-52039077db08" class=""><strong>Stemming</strong></h3><p id="135bc394-db0a-46b4-ae01-1656dfe593a2" class=""> 영어의 경우, love와 loves 같은(어미가 다르지만 의미가 같은)단어가 존재한다. 이때, love와 loves의 토큰을 별도로 나눠버리면, 컴퓨터는 이들을 다른 의미의 토큰으로 인식할 것이다. 따라서 이를 방지하기 위해<strong> 3) 어간추출(Stemming)이 필요</strong>하다.</p><p id="ebf32ec6-db04-4ce5-b338-56a9093098ce" class="">어간추출의 예시와 결과는 다음과 같다. wolf와 wolves에서, &#x27;ves&#x27;는 어미로 판단하여 제거가 된 것을 알 수 있다.</p><p id="463cc99b-50f2-4b5d-b935-0b177e025220" class="">
+</p><pre id="4ec1cce2-6732-470b-9194-cb8bc3bc594d" class="code"><code>from nltk.stem import PorterStemmer
+
+ps = PorterStemmer()
+
+words = [&quot;wolf&quot;, &quot;wolves&quot;]
+
+for word in words:
+    print(ps.stem(word))</code></pre><pre id="f7e8854d-b180-4f0e-910f-29ce9ffdbdec" class="code"><code>wolf
+wolv</code></pre><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="940ab679-1088-4660-9027-cfd83222eaf5"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%">Spacy는 Stemming을 제공하지 않고 lemmatization만 제공한다. 따라서 Stemming을 사용할 때는 NLTK를 이용한다.</div></figure><p id="a23d28d3-a444-4e29-83ab-5a8f6efb0603" class="">
+</p><h3 id="b3c4a56d-6bab-401f-8f41-00c57a3376aa" class=""><strong>Lemmatization</strong></h3><p id="8e4f7082-ba48-45b0-94b0-077a3a54c032" class="">stemming은 성능이 그리 나쁘진 않지만, 위와 같은 경우에는 또 다른 문제가 생성된다. &#x27;wolf&#x27;와 &#x27;wolv&#x27;를 다른 토큰으로 인식하게 되기 때문이다. 따라서 이럴 때, stemming보다 체계적인 Lemmatization을 활용한다. Lemmatization이란 단어들을 기본 사전형 단어 형태로 바꿔 토큰화하는 것을 뜻한다.</p><p id="5c65d48b-fd4c-493e-b036-424fd1427580" class="">
+</p><h2 id="c09d86e9-8c47-48cd-95a2-b0ff81a5412b" class="">NLP를 위한 라이브러리</h2><p id="7d66d6fc-7aa7-46ab-9ded-986d7a6732a0" class="">그렇다면, NLP를 하기 위해 대표적으로 활용되고 있는 라이브러리에 대해 알아보자.</p><ul id="ca30930a-d7d3-4fe9-ba2f-ceb80d757925" class="bulleted-list"><li><strong>NLTK</strong><p id="10b2fdaf-c879-4292-ac59-1454dbe31ba8" class="">파이썬의 가장 대표적인 NLP패키지다. 방대한 데이터 세트와 서브모듈을 가지고 있으며, NLP의 거의 모든 영역을 커버하고 있다.</p></li></ul><ul id="12d24a79-692b-405c-828e-555f6d7d55d7" class="bulleted-list"><li><strong>Gensim</strong></li></ul><p id="e5f8c586-8237-4b3e-949b-be3442a31b56" class="">토픽 모델링에서 두각 나타내는 패키지다.</p><ul id="c3756ec9-18df-4957-b6d8-e99aec287027" class="bulleted-list"><li><strong>SpaCy</strong><p id="1aa7b50f-50f4-4d2c-b62c-dc7e2956e1e1" class="">뛰어난 수행 성능으로 최근 가장 주목받는 NLP 패키지다. 문서 구성요소를 다양한 구조에 나누어 저장하는 대신, 요소를 색인화하고 검색정보를 간단히 저장한다. 따라서 실제 배포단계에서 NLTK보다 유리할 수 있다고 한다. 그러나 한글 버전이 지원 안된다는 단점이 있다.</p></li></ul><p id="c7af4d96-3344-4d81-a50f-569bcbf86ea8" class="">
+</p><p id="2966384c-8c13-44e3-8fc0-2c4537422127" class="">다음 포스팅에서는 벡터라이제이션 부분을 다뤄 볼 것이다. 이때 BOW, TF-IDF에 대해 기고하도록 하겠다! </p><p id="3f25c3e2-f5e1-4be9-bca5-80ead6d83b1b" class="">※ 선수지식: PCA, SVD</p><p id="ab964fa4-fdb6-432c-a37e-bfb8502bc3dd" class="">
+</p><p id="2a2941d8-489f-45dc-a766-0876a172d839" class="">
+</p></div></article></body></html>
