@@ -7,7 +7,7 @@ background: '/img/posts/DL_01_텍스트마이닝사진.png'
 categories: ['Deep Learning']
 ---
 
-</style></head><body><article id="f6b3fd13-ccb4-45f8-9fb5-1270e027e033" class="page sans"><header><h1 class="page-title">2021-04-09-텍스트분석</h1></header><div class="page-body"><blockquote id="ae070def-9cad-4749-ac1d-5938e02d1f5b" class="">요즘 세상이 참 많이 신기해졌다. 내가 쓴 글이 어떠한 감정을 내포하고 있는지도 기계가 파악하니 말이다. 이렇게 기술이 발전하기까지에는, 정말 대단한 분들의 언어 분석 연구가 있었기에 가능하다고 생각한다. 이러한 분석의 결실로써, 텍스트마이닝이 생겨나게 됐다.
+<body><article id="f6b3fd13-ccb4-45f8-9fb5-1270e027e033" class="page sans"><header><h1 class="page-title">2021-04-09-텍스트분석</h1></header><div class="page-body"><blockquote id="ae070def-9cad-4749-ac1d-5938e02d1f5b" class="">요즘 세상이 참 많이 신기해졌다. 내가 쓴 글이 어떠한 감정을 내포하고 있는지도 기계가 파악하니 말이다. 이렇게 기술이 발전하기까지에는, 정말 대단한 분들의 언어 분석 연구가 있었기에 가능하다고 생각한다. 이러한 분석의 결실로써, 텍스트마이닝이 생겨나게 됐다.
 오늘은 <strong>텍스트마이닝에 대한 개요</strong>를 알아보고자 한다.</blockquote><h1 id="5a472941-7f94-4c49-bd8f-731818da21d0" class="">텍스트마이닝과 NLP</h1><p id="fb0d27b9-f9b5-4858-949f-7ed267d90a89" class="">
 </p><h2 id="6b90b8b2-cad8-406c-bc04-108df8e2e858" class="">NLP의 정의</h2><h3 id="a971f34f-defd-4a7c-beeb-bb6a40e33916" class="">NLP와 텍스트마이닝</h3><p id="7cbc9f8b-c88e-409d-a673-2a87f5425f47" class="">NLP란, Natural Language Processing (자연언어 처리)를 의미한다.
 본질적으로 특수한 언어 분석을 수행하는 텍스트 마이닝의 구성 요소라도 볼 수 있다. <strong>인간 언어의 모호성을 해결</strong>하기 위한 방법론을 뜻한다.</p><p id="63a76b2a-3a28-46d2-b47d-f2200042ae39" class="">텍스트마이닝이란, 새로운 정보를 발견하기 위해 많은 양의 서면 자료를 조사하는 과정을 의미한다. 다양한 분석 방법을 사용하여 이를 수행하는데, 자연어 처리가 그 중 하나라고 볼 수 있다.</p><p id="cdaaa786-63f7-43bf-998d-04b2f3d27fca" class="">즉, <strong>텍스트마이닝은 텍스트에서 의미있는 정보를 추출하여 인사이트를 얻는 것</strong>이며, 이를 수행하기 위한 대표적 방법론이 NLP다. <strong>NLP는 기계가 인간의 언어를 해석</strong>하기 위한 방법이다.</p><p id="0047ba2a-3683-490d-853d-0e25d0093d43" class="">이는 놀라운 속도로 더욱 정교하게 발전하고 있다. 특히 공용어인 영어의 경우 비약한 발전을 이루고 있으며, 한글은 다양한 제약 조건(이하 설명 예정)때문에 비교적 어렵게 발전 중이다.</p><p id="54101a10-0a5c-4e32-9f7e-bef7bda388e0" class="">
@@ -19,7 +19,6 @@ categories: ['Deep Learning']
 </p><h3 id="3790a374-537d-4bd8-8079-52039077db08" class=""><strong>Stemming</strong></h3><p id="135bc394-db0a-46b4-ae01-1656dfe593a2" class=""> 영어의 경우, love와 loves 같은(어미가 다르지만 의미가 같은)단어가 존재한다. 이때, love와 loves의 토큰을 별도로 나눠버리면, 컴퓨터는 이들을 다른 의미의 토큰으로 인식할 것이다. 따라서 이를 방지하기 위해<strong> 3) 어간추출(Stemming)이 필요</strong>하다.</p><p id="ebf32ec6-db04-4ce5-b338-56a9093098ce" class="">어간추출의 예시와 결과는 다음과 같다. wolf와 wolves에서, &#x27;ves&#x27;는 어미로 판단하여 제거가 된 것을 알 수 있다.</p><p id="463cc99b-50f2-4b5d-b935-0b177e025220" class="">
 </p><pre id="4ec1cce2-6732-470b-9194-cb8bc3bc594d" class="code"><code>from nltk.stem import PorterStemmer
 
-ps = PorterStemmer()
 
 words = [&quot;wolf&quot;, &quot;wolves&quot;]
 
