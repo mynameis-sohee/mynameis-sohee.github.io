@@ -19,7 +19,7 @@ categories: ['Deep Learning']
 </p><h3 id="3790a374-537d-4bd8-8079-52039077db08" class=""><strong>Stemming</strong></h3><p id="135bc394-db0a-46b4-ae01-1656dfe593a2" class=""> 영어의 경우, love와 loves 같은(어미가 다르지만 의미가 같은)단어가 존재한다. 이때, love와 loves의 토큰을 별도로 나눠버리면, 컴퓨터는 이들을 다른 의미의 토큰으로 인식할 것이다. 따라서 이를 방지하기 위해<strong> 3) 어간추출(Stemming)이 필요</strong>하다.</p><p id="ebf32ec6-db04-4ce5-b338-56a9093098ce" class="">어간추출의 예시와 결과는 다음과 같다. wolf와 wolves에서, &#x27;ves&#x27;는 어미로 판단하여 제거가 된 것을 알 수 있다.</p><p id="463cc99b-50f2-4b5d-b935-0b177e025220" class="">
 </p><pre id="4ec1cce2-6732-470b-9194-cb8bc3bc594d" class="code"><code>from nltk.stem import PorterStemmer
 
-
+ps = PorterStemmer()
 words = [&quot;wolf&quot;, &quot;wolves&quot;]
 
 for word in words:
