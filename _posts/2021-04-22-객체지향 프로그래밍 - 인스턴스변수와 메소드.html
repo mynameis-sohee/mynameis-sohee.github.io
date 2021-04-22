@@ -1,0 +1,183 @@
+---
+layout: post
+title: "[CS] 05. 객체지향 프로그래밍 - 인스턴스변수와 메소드"
+subtitle: "인스턴스 변수와 인스턴스 메소드, 스페셜 메소드"
+date: 2021-04-20 10:45:13
+background: '/img/posts/CS_01_프로그래밍사진.jpg'
+categories: ['Computer Science']
+---
+
+<h1 class="page-title">인스턴스변수</h1></header><div class="page-body"><p id="0b535728-9439-45c5-8245-0fc22860a66f" class="">
+</p><h2 id="262633bc-9d5b-4d5a-bea5-2735df754d06" class="">인스턴스 변수</h2><p id="2287bd4b-a7ff-4c3f-b0cf-4ba125969034" class=""><strong>인스턴스의 개별적 속성은 인스턴스 변수</strong>라고 한다. 형식은 아래와 같다.</p><p id="5e083101-fe1a-45f4-aa90-a362483b7fa2" class="">
+</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="ca208129-1c9f-42d2-8dae-3bed8f8f0886"><div style="font-size:1.5em"><span class="icon">✅</span></div><div style="width:100%"><strong>인스턴스이름.속성이름(인스턴스 변수) = 속성에 넣을 값</strong></div></figure><p id="8b5bf7bf-0618-4bf8-b97e-71dfe790ed42" class="">
+</p><pre id="ea1cfe63-0074-4704-959c-ba015b263899" class="code"><code>class User:
+	pass
+
+user = User()
+user.name = &#x27;한소희&#x27;
+user.email = &#x27;eng.sohee@gmail.com&#x27;
+
+# 인스턴스 변수 사용방법
+print(user.name)
+</code></pre><p id="9bb3b1a4-f736-4797-b1e8-e7a79df18caf" class="">
+</p><h2 id="680dfb14-0cb2-4e3c-b610-32477fbad6a3" class="">인스턴스 메소드</h2><p id="091faf3f-2cfc-4410-9a79-29bae308bcc1" class="">객체는 속성과 행동이다. <strong>속성은 변수</strong>로 나타내고 <strong>행동은 함수</strong>로 나타낸다. <strong>이 함수를 메소드</strong>라고 한다.</p><p id="d96fe333-b781-4835-8a03-30f46fa1e607" class="">
+</p><p id="0fde44c2-fa90-4bf7-ba1c-62787f43b5b2" class="">메소드의 다양한 종류 중, 첫 번째로 <strong>인스턴스 메소드</strong>에 대해 설명해보겠다.</p><p id="b3749a5b-c888-4bb1-b738-6b6772491718" class="">인스턴스 메소드란, <strong>인스턴스 변수를 사용하거나, 인스턴스 변수에 값을 설정하는 메소드</strong>를 말한다.</p><pre id="c85a5de2-8ba6-44dc-88c8-9fa9e0d79f94" class="code"><code>class User:
+	# 인사 메시지 출력 메소드
+	def say_hello(some_user):
+		print(&#x27;안녕! 나는 {}야&#x27;.format(some_user.name))
+
+user1 = User()
+user1.name = &quot;한소희&quot;
+user1.email = &quot;eng.sohee@gmail.com&quot;
+
+# 인스턴스 메소드 사용방법. 2가지 방법이 존재
+User.say_hello(user1)
+user1.say_hello()
+
+</code></pre><p id="64f41216-9d30-4c94-8ecd-07d5fc859f7b" class="">우리는 함수에서 username을 호출하도록 했는데, user1에는 username이라는 속성이 없는데도 에러가 안났다. 그것은 인스턴스 메소드의 특징 때문이다. </p><p id="4d856294-1be8-4fed-86fc-2d820e2c12a8" class="">user1.say_hello() 에서는, user1의 첫 번째 속성을 넘겨주기 때문이다.</p><p id="74d9f420-7c12-4a67-9eab-4d18fd61d3e5" class="">
+</p><p id="f8c75494-cfed-428e-900c-277bb586645f" class="">그럼 새로운 메소드를 생성해보자.</p><pre id="26c305e8-c58b-45eb-8f32-37c65e49a125" class="code"><code>class User:
+	# 인사 메시지 출력 메소드
+	def say_hello(some_user):
+		print(&#x27;안녕! 나는 {}야&#x27;.format(some_user.name))
+	def login(some_user, my_email, my_password):
+		if (some_user.eamil == my_email and some_user.password == my_password):
+			print(&quot;로그인 성공&quot;)
+		else: print(&quot;로그인 실패&quot;)
+
+user1 = User()
+user1.name = &quot;한소희&quot;
+user1.email = &quot;eng.sohee@gmail.com&quot;
+user1.password = &quot;12&quot;
+
+# 인스턴스 메소드 사용방법
+user1.login(&quot;eng.sohee@gmail.com&quot;,&quot;12&quot;)
+</code></pre><p id="bc46a1a4-3166-4f82-a262-5340a479eb97" class="">
+</p><h3 id="65afbdea-814d-4569-a190-43d589f79174" class="">인스턴스 메소드의 특별한 규칙</h3><p id="8e95885c-5034-4325-bf92-31770fad0b80" class="">user1.login(&quot;eng.sohee@gmail.com&quot;,&quot;12&quot;)에서, <strong>user1 자신이 첫 번째 파라미터로서 자동전달</strong>된다. 우리는 이 것을<span style="border-bottom:0.05em solid"><strong> self 로 쓰기로 약속</strong></span>한다. 따라서 self 라고 작성해주자.</p><p id="2b5ed2cd-9e63-4ab7-a82a-599e14bac099" class="">
+</p><p id="80e9d0c4-a431-4a2d-9aa9-458d8dae4e6c" class="">수정된 코드 결과는 다음과 같다. self는 객체의 인스턴스 그 자체를 말한다. 즉, 객체 자기 자신을 참조하는 매개변수인 셈이다. 객체지향 언어는 모두 이걸 메소드에 안보이게 전달하지만, 파이썬은 <strong>클래스의 메소드를 정의할 때 self를 명시</strong>한다.</p><p id="f2e1770b-81fc-41dc-8868-598ab877dc58" class="">
+</p><pre id="24c261c3-b15b-400a-975b-ea292b9895e4" class="code"><code>class User:
+	# 인사 메시지 출력 메소드
+	def say_hello(self):
+		print(&#x27;안녕! 나는 {}야&#x27;.format(self.name))
+
+	def login(self, my_email, my_password):
+		if (self.eamil == my_email and self.password == my_password):
+			print(&quot;로그인 성공&quot;)
+		else: print(&quot;로그인 실패&quot;)
+
+user1 = User()
+user1.name = &quot;한소희&quot;
+user1.email = &quot;eng.sohee@gmail.com&quot;
+user1.password = &quot;12&quot;
+
+# 인스턴스 메소드 사용방법
+user1.login(&quot;eng.sohee@gmail.com&quot;,&quot;12&quot;)
+
+</code></pre><p id="3f34c862-c399-4057-912b-782b1c08cca0" class="">
+</p><p id="0fde0889-e5de-46b0-8d8c-6a01e66c9e5e" class="">이때 인스턴스 변수와 같은 이름을 갖는 파라미터가 존재하더라도, 혼동이 되지 않는다. 예시는 아래와 같다.</p><pre id="3015d0b1-e90c-46b7-8c1f-b40d57a40f86" class="code"><code>class User:
+	def check_name(self, name):
+		return self.name == name
+
+user1 = User()
+user1.name = &quot;한소희&quot;
+user1.email = &quot;eng.sohee@gmail.com&quot;
+user1.password = &quot;12&quot;
+
+# 인스턴스 메소드 사용방법. 결과값: True
+user1.check_name(&quot;한소희&quot;)</code></pre><p id="7e381637-a232-4f53-86fa-9af663a731fc" class="">
+</p><p id="2d5c85bb-444e-422a-96a7-61653b7ee7e8" class="">
+</p><hr id="ec837e5d-5621-413e-be90-d239eb5d0df1"/><p id="03d3ac75-ef51-44c4-8554-491d9495d8bc" class="">
+</p><h2 id="c699316e-0525-4119-9947-2567df7a6e53" class="">initialize 메소드</h2><p id="7e0d0b60-95de-4519-b319-24a8fb16fc13" class="">그런데 만약에, user1 뿐만 아니라 객체가 여러개 존재한다면, 저렇게 일일이 객체 지정을 해 주어야 하는 것일까? 그렇지 않다. 우리는 class 안에, 각 속성의 규칙을 정해줄 수 있다. 아래의 예시를 살펴보자.</p><pre id="31d05834-c3c7-4bc9-9768-2293379e8e06" class="code"><code>class User:
+	def initialize(self, name, email, password):
+		self.name = name
+		self.email = email
+		self.password = password
+
+user1 = User()
+user1.initialize(&quot;한소희&quot;, &quot;eng.sohee@gmail.com&quot;, &quot;12&quot;)</code></pre><p id="4a843988-8604-4439-83d8-a15a17b95974" class="">
+</p><p id="e7dcea70-0ba9-4825-99b4-7934552d1647" class="">이렇게 작성하면, 나중에 <strong>인스턴스가 많아져 많은 변수를 할당해야 할 때 반복적으로 작성하는 코드</strong>를 줄일 수 있다.</p><p id="b432ac4a-648f-4007-9536-1cb868947cee" class="">
+</p><hr id="881a72ea-510d-40f2-8543-316e35cf8e7c"/><p id="8866b324-2688-4eba-a2f5-e4547248426a" class="">
+</p><h2 id="de58d1ec-8fcc-4c08-a97c-798c14147341" class="">특수(Special) 메소드</h2><p id="9a69e9ab-60eb-4813-854f-83fb12d96ce5" class="">
+</p><h3 id="8c9e2ceb-4ec6-47ec-9731-a6cead588ae8" class="">init 메소드</h3><p id="c0a472eb-ec67-49a5-8fcd-aa724fdd017c" class="">그런데 위 <span style="border-bottom:0.05em solid">initialize 메소드도 사실은 두 줄이라 조금 길다.</span> 우리는 이것을 한 줄로 바꿔줄 수도 있다. 이때는 <strong>init을 활용하는데, 이는 특수메소드(스페셜메소드)</strong>라고 한다. 특수메소드는 앞뒤로 언더바가 들어가 있어, <strong>다운언더 메소드 혹은 던더 메소드</strong>라고 불리기도 한다.</p><p id="5d5f8fc5-545f-45a3-bbe2-39a56f5200d0" class="">
+</p><p id="5b23b631-8978-4f3b-8561-38a3bd569ddb" class="">즉 <span style="border-bottom:0.05em solid"><strong>특수(스페셜)메소드란, 특정상황에서 자동으로 호출되는 메소드</strong></span>인데, <strong>init의 경우 인스턴스가 생성될 때 자동으로 호출</strong>된다는 특징이 있다. 따라서 아래처럼 함수를 간단하게 변경할 수 있다.</p><p id="45d3b4d6-d107-4e15-ac92-1fd45c5c02c4" class="">
+</p><pre id="ffaaa952-ac17-4bea-b7ca-74b3e0fbb9e4" class="code"><code>class User:
+	def __init__(self, name, email, password):
+		self.name = name
+		self.email = email
+		self.password = password
+
+user1 = User(&quot;한소희&quot;, &quot;eng.sohee@gmail.com&quot;, &quot;12&quot;)
+</code></pre><p id="64fd67dd-255a-4409-9ec0-2ca4239e9df1" class="">이는 User 인스턴스가 생성된 후 init 메소드가 자동으로 호출되는 것이다. 이때 값들이 파라미터로 들어가주어 초기값이 설정되는 것이다. 그렇다면 간단한 실습을 진행해보자.</p><p id="6fe705dd-1db3-40c9-a1e4-1c334162f8c0" class="">
+</p><h3 id="94726e44-4fc8-4614-b562-df06b9f93132" class="">인스타그램 객체 프로그래밍 - init 메소드 실습 </h3><p id="f36242df-8daf-43d7-a226-45ceaa90ac86" class="">
+</p><pre id="8dbf252a-2ec9-482a-bb23-77b0e7a0c107" class="code"><code>class User:
+    # 인스턴스 변수 설정
+    def __init__(self, name, email, password):
+        self.name = name
+        self.email = email
+        self.password = password
+				
+				# 이 유저가 팔로우하는 유저 리스트
+        self.following_list = []    
+				# 이 유저를 팔로우하는 유저 리스트
+        self.followers_list = []    
+
+    # 팔로우 기능
+    def follow(self, another_user):
+        self.following_list.append(another_user)
+        another_user.followers_list.append(self) 
+            
+
+    # 내가 몇 명을 팔로우하는지 리턴
+    def num_following(self):
+        return len(self.following_list)
+        
+    # 나를 몇 명이 팔로우하는지 리턴
+    def num_followers(self):
+        return len(self.followers_list)
+
+# 유저들 생성
+user1 = User(&quot;Young&quot;, &quot;young@codeit.kr&quot;, &quot;123456&quot;)
+user2 = User(&quot;Yoonsoo&quot;, &quot;yoonsoo@codeit.kr&quot;, &quot;abcdef&quot;)
+user3 = User(&quot;Taeho&quot;, &quot;taeho@codeit.kr&quot;, &quot;123abc&quot;)
+user4 = User(&quot;Lisa&quot;, &quot;lisa@codeit.kr&quot;, &quot;abc123&quot;)
+
+# 유저마다 서로 관심 있는 유저를 팔로우
+user1.follow(user2)
+user1.follow(user3)
+user2.follow(user1)
+user2.follow(user3)
+user2.follow(user4)
+user4.follow(user1)
+
+# 유저 이름, 자신의 팔로워 수, 자신이 팔로우하는 사람 수를 출력
+print(user1.name, user1.num_followers(), user1.num_following())
+print(user2.name, user2.num_followers(), user2.num_following())
+print(user3.name, user3.num_followers(), user3.num_following())
+print(user4.name, user4.num_followers(), user4.num_following())</code></pre><p id="6b695a2c-4ab4-40cd-bb15-f936ee03eeee" class="">
+</p><p id="bc0ced4f-c74b-42ff-9509-9c65e8601747" class="">
+</p><h3 id="058e0412-b9ae-4494-bbf1-ef0e7de23900" class="">str 메소드</h3><p id="a805d7cb-061b-4619-856b-6f46195ed5b4" class="">인스턴스를 출력(print)할 때 마다, 우리가 원하는 변수값이 바로바로 출력되지 않는다. 이때 str 메소드는 <strong>인스턴스에 print 함수가 호출될 때 자동으로 출력</strong>시켜주는 메소드를 의미한다. 예제는 다음과 같다. (위와 중복되는 함수는 생략하겠다.)</p><p id="ed081653-cf76-4dcd-ac96-e32f6cebb13e" class="">
+</p><pre id="c9eb5261-0791-4e95-af6e-5f68220557fb" class="code"><code># 아래와 같이 바로 출력할 경우, 인스턴스 변수값이 바로 출력되지는 않음
+print(user1) 
+
+def __str__(self);
+	return &quot;사용자 : {}, 이메일 : {}&quot;.format(self.name, self.email)
+
+# str 형식에 맞게 인스턴스 변수 출력
+print(user1) </code></pre><p id="62c9f353-c69c-47cd-8418-06ecdb2d1474" class="">
+</p><h2 id="64114960-7ae2-42ca-a965-9822d4c2e5bc" class="">여러 인스턴스가 공유하는 속성</h2><p id="a18780cc-25ed-4acd-a84c-02ec8407a8fb" class="">만약, user 인스턴스의 총 개수를 구하려고 한다면 어떻게 해야 하는가?</p><p id="c7cc14d1-a1f5-4df2-b7e6-74e497fabe8f" class="">파이썬은 이렇게 <strong>여러 인스턴스가 공유하는 속성을 </strong><span style="border-bottom:0.05em solid"><strong>클래스 변수</strong></span><strong>로 지정</strong>한다.</p><p id="971314c1-d810-4635-8c4e-b20dcb140051" class="">이때, init 함수가 생기면 개수가 증가해야 하므로 저렇게 함수를 적어준다. 그러면 한번씩 init함수가 수행될 때마다 count 수가 늘어날 것이다. 이것이 바로 <strong>클래스 변수(특정 클래스의 인스턴스가 공통으로 갖고 있는 변수)</strong>를 의미한다.</p><p id="0f26c55c-dd37-4571-b341-4638554d80da" class="">
+</p><pre id="3a6d37bd-1c42-4764-a312-0bffd3682fb6" class="code"><code>class User:
+    # 인스턴스 변수 설정
+		count = 0
+
+    def __init__(self, name, email, password):
+        self.name = name
+        self.email = email
+        self.password = password
+				User.count += 1
+
+user1.count = 1
+print(User.count)
+
+# user1의 count만 1로 출력. 같은 이름의 클래스 변수와 인스턴스 변수 중에는, 인스턴스 변수가 조금 더 강하다.
+print(user1.count) 
+print(user2.count)</code></pre><p id="d4ff5390-ebf6-45ea-89a7-3c21139821fd" class="">
+</p><p id="efb97bd3-ed7d-447a-94d7-975cb9a08cf1" class="">이처럼 클래스 변수는 아래와 같이 출력할 수 있다.</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="4b79baaa-9513-468d-99c6-5bf8c873975d"><div style="font-size:1.5em"><span class="icon">✅</span></div><div style="width:100%"><strong>클래스이름.클래스변수이름</strong></div></figure><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="598d3c4b-ebb8-448f-aa45-25f3326a32d1"><div style="font-size:1.5em"><span class="icon">✅</span></div><div style="width:100%"><strong>인스턴스이름.클래스변수이름 </strong></div></figure><p id="61dcee7f-7c4f-44fb-a083-10c3982fd29e" class="">그리고 인스턴스 변수가 조금 더 강한 속성 때문에, 클래스 변수를 바꿀 때는 반드시<strong> 클래스이름.클래스변수이름 = 바꾸고자하는 값</strong>으로 적어줘야 코드가 꼬일 염려를 덜 수 있으니 반드시 기억하자!</p></div>
