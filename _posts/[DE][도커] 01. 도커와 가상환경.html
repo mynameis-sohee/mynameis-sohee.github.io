@@ -1,0 +1,53 @@
+---
+layout: post
+title: "[DE][도커] 01. 도커와 가상환경"
+subtitle: "도커와 가상환경의 필요성, 개념, 기본 명령어"
+date: 2021-02-11 10:45:13
+background: '/img/posts/CS_01_프로그래밍사진.jpg'
+categories: ['Data Engineering']
+---  
+
+
+
+<article id="926c97a5-797d-414c-a172-7af36d4273f2" class="page sans"><header><h1 class="page-title">.도커와-가상환경</h1></header><div class="page-body"><blockquote id="bc21f3cb-d7ca-4461-b6bd-0eb46fc70150" class="">요즘 가장 열심히 배우고 있는 것 중 하나가 바로 도커다. 개인적으로 상당히 어려웠다. 비교적 다른 개념에 비해 생소해서 더욱 그런 듯 하다. 그래도, 도커를 사용하면 편의성이 매우 높아지므로 (중요성을 인지하고 있으므로) 열심히 공부하고 있다!</blockquote><blockquote id="5923f949-790a-4932-81e0-f8bfa2f61af2" class="">나와 같은 도커 초보분들을 위해, 포스팅 주제를 ’도커’로 결정했다. 나처럼, 공부하시는 분들이 조금이나마 도움이 되셨음 좋겠다. (혹시라도, 잘못 된 내용이 있다면 연락주세요. 바로 수정하겠습니다.) 그럼 포스팅 시작!</blockquote><hr id="705bf376-0204-416f-aa49-cb432f98ad6c"/><h1 id="f2c97322-5b0b-47cc-9018-2a98cd550383" class=""><strong>[Docker][01] 도커와 가상환경</strong></h1><ul id="2fe5e99a-70dd-4b46-9b9e-9587a3a993f0" class="bulleted-list"><li>도커와 가상환경의 <strong>필요성</strong>을 이해하기</li></ul><ul id="c5bd710b-2e4b-47e6-aa79-2e4f9fc7823f" class="bulleted-list"><li>도커와 가상환경의 <strong>개념</strong>과 각 개념의 <strong>차이</strong>를 이해하기</li></ul><ul id="2a6c5960-cbab-43c6-a697-872177726ade" class="bulleted-list"><li>간단한 <strong>가상환경 구축 방법</strong>을 살펴보기</li></ul><ul id="5b80c4a8-d0f5-48fe-ba35-e18e6c6c5756" class="bulleted-list"><li>간단한 <strong>도커 명령어</strong>를 살펴보기</li></ul><hr id="a92ae3f4-49e9-4a4c-8dad-961856bf1ea0"/><h2 id="e4e7011a-96b0-4c13-b54b-9afcfb0ca6d4" class=""><strong>도커와 가상환경의 필요성</strong></h2><p id="c0c10594-368e-4792-8eaf-07d8fbef5e24" class="">한 대의 컴퓨터로 많은 프로젝트 작업 수행을 하는 경우가 많다.</p><p id="44e82373-ec39-4cca-b43d-19293b341659" class="">이때, 각 프로젝트마다 필요한 설치파일 및 버전은 다를 수 있다.</p><p id="d0bea9b4-61b7-4dba-9d65-8111b7817dee" class="">그렇다면, A프로젝트에는 파이썬 이전 버전이 &amp; B프로젝트는 파이썬 최신 버전이 설치되어야 구동된다고 가정해보자.</p><p id="cb0ef559-0f63-4b2b-b8ee-7e7eda13a4fd" class="">A프로젝트를 수행할 때는, 컴퓨터에 파이썬 이전 버전을 설치해두었다가, B프로젝트를 수행할 때는 버전을 업그레이드 해야 한다. 또, A프로젝트 수정이 필요하면 다시 파이썬을 다운그레이드 해야 할 것이다. 참 복잡하다. 이런 경우에, 우리는 한 대의 컴퓨터를 마치 여러 대 처럼 나눠, 프로젝트 환경을 각각 만들어줄 수 있겠다는 아이디어를 도출할 수 있겠다.</p><p id="5b04297d-6c8f-468a-8c7b-403ca829c624" class="">이때 해결할 수 있는 것이 가상환경(VM)과 도커(Docker)다.</p><hr id="8a9608ef-5b50-4e1b-b9a0-0cfbe4782b90"/><h2 id="63ca34fb-4a64-476c-8bfb-25bf255315fe" class=""><strong>가상환경</strong></h2><h3 id="557d4288-98af-49fd-81b0-caaaad3cb5ee" class=""><strong>가상환경이란?</strong></h3><p id="b713de76-7f6d-4ac0-8e99-1d3f81684701" class="">말 그대로, 내 컴퓨터 로컬에 종속된 새로운 환경을 구축하는 것이다.</p><p id="cd453466-2af4-4da4-a063-999a16f25958" class="">새로운 환경마다, 필요한 파일을 설치하는 것이라고 보면 된다.</p><p id="c42a0d28-b5ff-447d-84ea-82f369460bd1" class="">가상환경을 사용할 경우, 각 프로젝트마다 독립적으로 설치파일을 실행할 수 있다.</p><p id="9eba2c39-858b-4d44-9931-7d84667493e9" class="">번거롭게 업그레이드와 다운그레이드 &amp; 설치와 삭제를 반복할 필요가 없다는 장점이 매우 매력적이다.</p><h3 id="39158060-17bb-44b5-beac-41c576790b06" class=""><strong>간단한 가상환경 구축법 살펴보기</strong></h3><p id="e5a235df-951f-4206-9b4b-1708235c0af1" class="">추후 자세히 다룰 테지만, 우선적으로 가장 큰 개념의 가상환경 구축법을 살펴보자.</p><pre id="40fc9ca3-e280-4332-9d9b-1898159b6cc5" class="code code-wrap"><code># 가상환경 확인
+conda env list
+
+# &#x27;project1&#x27;이라는 가상환경(VM) 구축
+conda create --name project1
+
+# 가상환경 활성화
+conda activate project1
+
+# 가상환경 비활성화
+conda deactivate project1</code></pre><hr id="bfd899b8-68a3-4d9f-b748-0766c06024a8"/><h2 id="ed902d88-f20c-4126-914a-69e5a157dc43" class=""><strong>도커(Docker)</strong></h2><h3 id="82465ff6-b2c9-42c5-bf28-875ec6bda15a" class=""><strong>도커(Docker)란?</strong></h3><p id="ca1b1f90-4bbe-4a08-9a9f-00fd865e1e27" class="">만약 프로젝트1을 수행하기 위해, A &amp; B &amp; C 설치환경이 필요하다고 가정해보자.</p><p id="7db909d3-4916-4133-9b38-8c55d66c5a92" class="">컴퓨터를 새로 구매한 경우에는 A &amp; B &amp; C를 또 일일이 설치해야 한다. 친구와 프로젝트1을 함께 수행하는 경우에는, 친구의 컴퓨터에도 A &amp; B &amp; C를 일일이 설치해야 프로젝트1을 수행할 수 있을 것이다.</p><p id="2e29835c-93aa-4421-98c9-88a36578c775" class="">이런 경우, 우리는 필요한 A &amp; B &amp; C 설치환경을 사진처럼 촬영해, 도커허브에 저장한다. 그리고, 이 파일을 설치해야 하는 환경에 허브에 올린 사진을 다운로드한다. 마치 클라우드드라이브에 저장한 파일을 어느 컴퓨터에서든 내려받는 것처럼 말이다.</p><p id="7e8f7b03-122f-4efe-a545-1ff40a147193" class="">이렇게 이미지를 저장하면, 도커는 자동적으로 우리의 컴퓨터에 독립적 설치공간(도커 컨테이너)을 생성하고, 그 공간에 (이미지에 저장된) 파일을 설치해준다.</p><p id="2118496c-70ae-4288-9d5e-d704ca57b175" class="">
+</p><h3 id="8202a2da-3f7b-4ec9-bbc1-fd3595c4c3f6" class=""><strong>간단한 도커 명령어 살펴보기</strong></h3><p id="c6cb5364-6eee-4a39-ae4c-21f5f2c018c8" class="">도커 명령어는 이 외에도 아주 많다. 추후 게시글을 통해, 찬찬히 살펴 볼 예정이지만, 우선적으로 어떤 형태로 명령어를 작동시키는지 대략적으로 살펴보자.</p><pre id="69143bcb-286a-4404-b5c4-73a165221674" class="code code-wrap"><code>#startdocker 
+run -d -p 80:80 docker/getting-started
+
+# 저장한 docker 이미지 확인
+docker imagesdocker image ls
+
+# docker 이미지 저장하기
+# 순서: 계정/레포지토리명:태그
+docker image pull docker/whalesay:latest
+
+# container1이라는 컨테이너 안에, docker/whalesay:latest 이미지 열기(이미지는 다른 이미지여도 됩니다.)
+docker container run --name container1 docker/whalesay:latest cowsay boo
+
+# 컨테이너 확인
+docker container ls -adocker container ls
+
+# 컨테이너 삭제
+docker container rm container1
+
+# 컨테이너 전체 삭제
+docker container prune
+
+# 이미지 삭제
+docker image rm docker/whalesay
+
+# docker 정보 확인
+docker image inspect aibcontents/sc31:1.0</code></pre><p id="46a72dca-6cde-490a-b5a1-899407f10ac1" class="">
+</p><h3 id="46fda0ea-b4e2-46b9-b60e-95edcb30bdb9" class=""><strong>가상환경과 도커 차이</strong></h3><p id="6de68b2d-47bb-4150-87dd-c063e8d74fd1" class=""><strong>가상환경은 Host Operating System에 접근해 PC 메모리를 직접적으로 사용하고, 도커는 그렇지 않다는 것</strong>이 가장 큰 차이점이다.</p><p id="2343ecb3-888a-4268-8515-8efff42751fd" class="">도커는 Host Operating System에 접근할 필요가 없기에, 가상환경보다 프로젝트 수행 속도가 빠르다는 장점이 있다.</p><p id="2dd17f97-b10d-4e46-be6f-ee370b910c9a" class="">가상환경은 Host Operating System에 접근해야 하기에, 컴퓨터의 메모리를 많이 차지해서, 대기업들의 대규모 프로젝트에서는 도커가 자주 사용된다고 한다.</p><p id="431ded9f-6973-4be1-a12b-a56ca5c635e8" class="">그러나 모든 것이 장점이지는 않겠다. 도커의 일부 기능은 Window에 지원하지 않기에, Window 유저는 리눅스 환경을 구축하는 것이 좋다고 하니 참고하자.</p><p id="1b6db889-c4e6-49a0-baf0-1b4b07774aac" class="">
+</p><p id="17edb73b-e845-48dc-ae31-10c9cf8a7076" class="">
+</p><p id="6590af96-1540-4459-ac40-516f6d4d5ad7" class="">
+</p><p id="58557372-5c21-49b3-a7c1-00a541954cc3" class="">  📧 E-mail : <a href="mailto:eng.sohee@gmail.com">eng.sohee@gmail.com</a></p></div></article>
