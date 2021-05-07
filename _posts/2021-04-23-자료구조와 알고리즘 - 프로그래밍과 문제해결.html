@@ -17,6 +17,11 @@ categories: ['Computer Science']
     
 <img src='http://drive.google.com/uc?export=view&id=1_R76d1CLS7uTaANsU9hDMmLUQp46S-Tb'/><br>
 
+    
+&nbsp;   
+    
+&nbsp;   
+
 <p id="579a4447-4be6-4eeb-88ce-a27a2f3ed818" class="">한 달 여 전부터, 알고리즘 스터디를 주최해 운영하고 있는데, 생각보다 어렵다. 아니, 재미는 있는데 시간이 참 오래걸린다. 그럼에도 불행 중 다행인 것은, 점차 풀이 속도가 붙는다는 것이다.</p><p id="9b375b59-9bc5-4df6-98a7-a33f3558ff95" class="">
 </p>
     
@@ -26,6 +31,9 @@ categories: ['Computer Science']
     <p id="53696005-179c-4cb1-96bc-5a84f7ca3fcf" class="">( <strong>알고리즘 문제 풀이 과정은 깃허브에 잘 정리해두었다. </strong><a href="https://github.com/mynameis-sohee/Python-Algorithm-Study">https://github.com/mynameis-sohee/Python-Algorithm-Study</a>)</p><p id="f1761c55-b6b6-4c5e-aae4-ec83182bde26" class="">
 </p>
     
+    
+&nbsp;   
+
     <p id="7b39bb52-fd8b-429e-aba1-a15d1c0c2ac6" class="">각설하고, 내가 풀이를 하면서 느낀 점이 있다. 바로, 파이썬 내장함수는 생각보다 많다는 것이다. 그리고 이것에 아직 내가 익숙치 않다는 것이다. 따라서  내장함수를 다양하게 활용해보는 연습이 필요하다는 결론을 내렸다.</p><p id="1a5c2408-d5fc-437b-81f6-a23caf338957" class="">
 </p>
     
@@ -39,6 +47,15 @@ categories: ['Computer Science']
 &nbsp;   
     
 &nbsp;   
+
+    
+&nbsp;   
+
+
+    
+&nbsp;   
+
+
     
     <h1 id="ffb341a8-f3d0-4f0f-a1a5-06ef0127e59b" class="">메소드 활용</h1><h2 id="9aa3793d-88c2-4a8c-8844-3ad4c0fc6daa" class="">rjust(width, [fillchar])</h2><p id="8a7f7ecd-4e28-4bf4-8f80-79da13aef49a" class="">rjust는 원하는 문자를 따로 지정하고, 다른 문자열로 앞 부분을 채워줄 수 있는 메소드다.</p><p id="ab689629-8580-4d95-9fce-1105a7aaabbb" class="">
 </p>
@@ -70,7 +87,15 @@ print(&quot;123&quot;.zfill(5))</code></pre><p id="5314995b-9d02-4d47-a771-bbea2
     <h2 id="35f941d8-eb2d-4a12-82e4-00b656cd8ba8" class="">Split</h2><p id="26fbd66c-59ce-4fc1-abe0-c0f8cd130dfc" class="">split은 문자열을 다룰 때 주로 사용된다. 문자열을 자르기도, 원하는 만큼 출력하기도, 리스트로 반환하기도, 대체하기도 가능하다.</p><p id="ccbcd9ef-b5a8-4ab1-8872-5585610e02ef" class="">이는 아래의 설명을 통해 이해해보도록 하자.</p><p id="05c980bd-1a68-4312-afbc-8acb1b3ff3ec" class="">코드 설명은 아래 주석으로 달아 두었다!</p><p id="6eabb988-5bcf-485c-a159-7efc1127d333" class="">
 </p>
     
-    <p id="3c42c6d3-f53c-4279-8ef2-b8dc433f127b" class="">(다른 것들은 많이 사용했는데, startswith와 endswith는 처음 보는 것 같다.. 문자 더미를 분리할 때 활용하면 좋을 것 같다!)</p><pre id="87cd2c36-54bd-4c10-8c43-c3551fd2a8af" class="code"><code># 테스트 문자열을 지정
+    <p id="3c42c6d3-f53c-4279-8ef2-b8dc433f127b" class="">(다른 것들은 많이 사용했는데, startswith와 endswith는 처음 보는 것 같다.. 문자 더미를 분리할 때 활용하면 좋을 것 같다!)</p>
+
+    
+&nbsp;   
+
+    
+&nbsp;   
+
+<pre id="87cd2c36-54bd-4c10-8c43-c3551fd2a8af" class="code"><code># 테스트 문자열을 지정
 string_ = &quot;Hello, I am Jack and I am a data scientist&quot;
 
 # 문자열의 1번 인덱스 출력(e)
@@ -90,7 +115,20 @@ print(string_.endswith(&#x27;tist&#x27;))
 
 # 해당 str에서 &quot;Jack&quot;라는 str을 &quot;John&quot;으로 반환
 print(string_.replace(&quot;Jack&quot;, &quot;John&quot;))</code></pre><p id="bbc41678-aed8-4fde-a1ff-6927f211c3c7" class="">
-</p><h2 id="a4415ad0-d30a-4609-8476-bc942d9134e4" class="">Map</h2><p id="b687e9c4-baeb-43ee-9b9d-3f0bbc7b1153" class="">Map은 파이썬의 내장함수로, 리스트의 요소를 지정된 함수로 처리해주는 함수다. 이는 매우 자주 사용되며, 예시는 아래와 같다.</p><p id="fa7c1038-3302-4705-b36e-32f41ba6fe21" class="">그런데, 사실 <span style="border-bottom:0.05em solid">내가 map을 설명하는 이유는 아래 에러설명을 위해서</span>다. (내가 자주 까먹기 때문에...!)예시(아래)와 같이 코드를 작성하면 TypeError가 발생한다.</p><h2 id="0adee6fa-6828-4dc9-8e79-c41cf55f628d" class="">Map 에러발생</h2><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="579c5616-9aca-46a8-9e5d-937bf98be6a4"><div style="font-size:1.5em"><span class="icon">⚠️</span></div><div style="width:100%">TypeError: map() must have at least two arguments.</div></figure><pre id="e0ecd2e5-b781-4b8e-af0c-d466b79590ec" class="code"><code>def solution(num):
+</p>
+
+    
+&nbsp;   
+
+    
+&nbsp;   
+
+<h2 id="a4415ad0-d30a-4609-8476-bc942d9134e4" class="">Map</h2><p id="b687e9c4-baeb-43ee-9b9d-3f0bbc7b1153" class="">Map은 파이썬의 내장함수로, 리스트의 요소를 지정된 함수로 처리해주는 함수다. 이는 매우 자주 사용되며, 예시는 아래와 같다.</p><p id="fa7c1038-3302-4705-b36e-32f41ba6fe21" class="">그런데, 사실 <span style="border-bottom:0.05em solid">내가 map을 설명하는 이유는 아래 에러설명을 위해서</span>다. (내가 자주 까먹기 때문에...!)예시(아래)와 같이 코드를 작성하면 TypeError가 발생한다.</p>
+
+    
+&nbsp;   
+
+<h2 id="0adee6fa-6828-4dc9-8e79-c41cf55f628d" class="">Map 에러발생</h2><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="579c5616-9aca-46a8-9e5d-937bf98be6a4"><div style="font-size:1.5em"><span class="icon">⚠️</span></div><div style="width:100%">TypeError: map() must have at least two arguments.</div></figure><pre id="e0ecd2e5-b781-4b8e-af0c-d466b79590ec" class="code"><code>def solution(num):
     num_square = list(map(lambda x: x*x, num) )
     print(num_square)
 
@@ -104,11 +142,17 @@ print(string_.replace(&quot;Jack&quot;, &quot;John&quot;))</code></pre><p id="bb
 
 # 입력예시: 1,2,3,4,5
 num = map(input().split(&#x27;,&#x27;) )
-solution(num)</code></pre><figure id="cf19e0f7-d337-4235-be86-ff4dfe64e6ab" class="image"><a href="%E1%84%8C%E1%85%A1%E1%84%85%E1%85%AD%E1%84%80%E1%85%AE%E1%84%8C%E1%85%A9%E1%84%8B%E1%85%A1%E1%86%AF%E1%84%80%E1%85%A9%E1%84%85%E1%85%B5%E1%84%8C%E1%85%B3%E1%86%B71%20c2f7bc0c94e642f886b909a2020390c9/Untitled%201.png"><img style="width:507px" src="%E1%84%8C%E1%85%A1%E1%84%85%E1%85%AD%E1%84%80%E1%85%AE%E1%84%8C%E1%85%A9%E1%84%8B%E1%85%A1%E1%86%AF%E1%84%80%E1%85%A9%E1%84%85%E1%85%B5%E1%84%8C%E1%85%B3%E1%86%B71%20c2f7bc0c94e642f886b909a2020390c9/Untitled%201.png"/></a></figure><p id="75bf97f0-af47-4569-bee5-796b816e6361" class="">
-</p>
+solution(num)</code></pre>
+
+<img src='http://drive.google.com/uc?export=view&id=1QMVmnuuwTcNiOorgMdgWkMD2o14-R_3N'/><br>
     
     <p id="bee2ae6a-75a1-4625-9fc2-9938d6e1a137" class="">원인은 바로, map의 성질 때문이다. map으로 처리된 리스트 값들은 default 값으로 str의 데이터타입으로 처리된다. 하지만 이 코드에서는 데이터타입이 int 여야 한다. 따라서 아래처럼 int 라고 반드시 지정해주어야 오류가 발생하지 않는다.</p><p id="68d9f8c7-37a9-4c64-8cac-0fcba609968e" class="">
 </p>
+
+    
+&nbsp;   
+
+    
     
     <pre id="d31d2680-36d9-43d7-bf6f-2c9b3bb4d5ba" class="code"><code>def solution(num):
     num_square = list(map(lambda x: x*x, num) )
