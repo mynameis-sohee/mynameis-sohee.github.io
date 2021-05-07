@@ -1,0 +1,123 @@
+---
+layout: post
+title: "[CS] 07. 자료구조와 알고리즘 - 파이썬을 활용한 문제해결"
+subtitle: "정규표현식의 이해, Copy, 컬렉션 자료형, Python의 이해(언어설명, 버전설명 등)"
+date: 2021-04-24 10:45:13
+background: '/img/posts/CS_01_프로그래밍사진.jpg'
+categories: ['Computer Science']
+---
+
+<h2 id="c6836637-9b54-4cc1-a2db-d764517e8ea8" class="">정규표현식(=정규식)</h2><p id="a0d6506e-7b6b-4a36-9fc3-811db79cc2fe" class="">정규표현식이란, 특정한 규칙을 가진 문자열의 집합을 사용하는 데에 표현하는 언어다. 주로 복잡한 문자열을 처리할 때 사용한다. </p><p id="3d58f687-0258-4dfb-a576-761b4bf725ec" class="">예를 들어, 주민등록번호 뒷자리 7자리를 별표(*)처리하고 싶다고 할 때, 정규표현식을 사용한다면 보다 간편하고 직관적인 코드를 짤 수 있다.</p><p id="2949a44a-e19f-4cca-9cc8-8fccc500b5ed" class="">정규표현식의 예시로는, 아래 링크를 걸어두도록 하겠다.</p><p id="3a997742-1799-4bdb-9841-7c04528f57f5" class=""><a href="https://wikidocs.net/1642">https://wikidocs.net/1642</a></p><p id="6d87a402-e21c-471b-9672-239014241830" class="">
+</p>
+
+<p id="83d0df62-e12d-43ee-b5a3-6f44ac45acd4" class="">
+
+</p><p id="73bb3579-7171-4a4e-b9d1-9e6998015f99" class="">파이썬에서는 이런 정규표현식을 re 모듈로 지원하는데, 딥러닝(텍스트마이닝) 한 사람들이면 이 라이브러리가 익숙할 수 있겠다. 텍스트 전처리 시, 불용어나 특수기호 등을 제거할 때 사용됐다.</p><p id="9670ea7f-08bf-44ab-9fc6-ca5e15c9e308" class="">
+
+</p>
+
+&nbsp;
+
+<pre id="1ba3c322-2122-4426-b3c4-57df9dedb9b8" class="code"><code>import re
+
+wordlist = [&quot;color&quot;, &quot;colour&quot;, &quot;work&quot;, &quot;working&quot;,
+            &quot;fox&quot;, &quot;worker&quot;, &quot;working&quot;]
+
+for word in wordlist:
+        if re.search(&#x27;col.r&#x27;, word) : 
+                print (word)</code></pre><p id="225bd591-067d-4750-99fc-966f83f97217" class="">라이브러리를 활용한 예제는 아래와 같다.  col로 시작하고 r이 끝나는 단어들을 &#x27;col.r&#x27;로 정규표현식으로 작성하니 코드의 가시성이 높아졌다!</p><p id="7525958f-35de-41fa-8a72-794268bef06b" class="">
+</p><p id="23bc5a18-6bca-4264-b537-8e6a7a90716a" class="">
+</p>
+
+
+&nbsp;
+
+&nbsp;
+
+<h2 id="b7b5fa11-cd95-4d75-994d-f0e223cf34d9" class="">얕은 복사와 깊은 복사</h2><p id="aeb5428d-173c-47e1-a631-3285a2d0b7c2" class="">얕은 복사란, 특정 값을 복사한 복제본이 있을 때, 원본값(혹은 복제값)의 내용을 변경한 경우, 남은 원본값(혹은 복제값)의 내용까지 변경된 내용이 적용되는 복사다. 즉 <span style="border-bottom:0.05em solid"><strong>원본값과 복제값이 유기적으로 연결</strong></span> 돼 있다.</p><p id="6751601e-3f28-4dfa-894a-f99dc5a8b62e" class="">
+</p><p id="8d76560d-fa35-4cd0-af84-b21b2d5c496e" class="">깊은 복사란, 얕은복사와 달리 <span style="border-bottom:0.05em solid"><strong>복제값과 원본값이 완전 분리</strong></span>돼 있다. 복제값을 변경하든, 원본값을 변경하든, 데이터의 변화값이 타 복제값 혹은 원본값에 영향을 주지 않는다.</p><p id="a205fc60-7781-4046-97d3-b864449e5fee" class="">
+</p><p id="ea30898e-16bd-41da-936c-98163896a2f7" class="">이는 아래 코드를 보면 확실히 알 수 있다.</p><p id="2097094b-0c0d-441b-87d5-f816849c9196" class="">
+</p>
+
+&nbsp;
+
+<pre id="bafb75f0-9e08-498e-8c10-834d290f27ad" class="code"><code>import copy
+
+list_var = [[1,2],[3,4]]
+
+# 얕은 복사
+list_var_copy_1 = list_var.copy()
+list_var_copy_2 = list_var.copy()
+
+# 깊은 복사
+list_var_deepcopy = copy.deepcopy(list_var)
+
+list_var[1].append(5)
+
+# 출력값: [[1, 2], [3, 4, 5]]
+print(list_var)
+
+# 출력값: [[1, 2], [3, 4, 5]]
+print(list_var_copy_1)
+
+# 출력값: [[1, 2], [3, 4, 5]]
+print(list_var_copy_2)
+
+# 출력값: [[1, 2], [3, 4]]
+print(list_var_deepcopy)</code></pre><p id="7f59438f-060b-4afd-9b87-7a5a08a65391" class="">
+</p><p id="6b6441b6-1b32-443b-b2d6-194e7665e109" class="">list_var(원본값)에 5라는 값을 추가했을 때, list_var_copy_1, list_var_copy_2의 경우 별도 조정 없이도 5가 추가된다. 이에 반해, 깊은 복사를 수행한 list_var_deepcopy의 경우에는 5가 추가되기 전 값을 깊은복사한 것이므로, 5가 생성되지 않는다.</p><p id="e1984914-63be-44ad-8a58-f23c39e23c31" class="">
+</p><p id="e6307eb8-eea5-413d-9bf4-43957259e8df" class="">
+</p><p id="e450c6a6-6c07-4e63-97df-43e96428f155" class="">
+</p>
+
+&nbsp;
+
+&nbsp;
+
+<h2 id="50503b15-4ff8-4381-9782-2fbd4d6c5cf4" class="">파이썬의 컬렉션 자료형</h2><p id="4934b33d-0856-447e-8f3d-ad493b128368" class="">컬렉션 자료형이란, <strong>여러 가지 요소를 하나로 묶어 사용하는 데이터 타입</strong>이다. <span style="border-bottom:0.05em solid">리스트와 튜플, 딕셔너리. 레인지 </span>등이 컬렉션 자료형에 속한다.</p><p id="7171d4cb-2f54-45dd-a592-e20e645ffc98" class="">
+</p><p id="cd2b07a2-5421-4f74-b74a-4cbf1e25407d" class="">
+</p><p id="89346a95-633e-4cce-83ba-65d18a97faf0" class="">
+
+</p>
+
+&nbsp;
+
+&nbsp;
+
+<h1 id="c30b0af5-b648-4a18-a672-1634e3046b16" class="">파이썬</h1><p id="5f87c9fc-9e4e-4bff-91e0-eb9fabb5c285" class="">파이썬(Python)은 1990년 암스테르담의 귀도 반 로섬(Guido Van Rossum)이 개발한 인터프리터 언어이다. 귀도는 파이썬이라는 이름을 자신이 좋아하는 코미디 쇼인 &quot;몬티 파이썬의 날아다니는 서커스(Monty Python’s Flying Circus)&quot;에서 따왔다고 한다.</p><p id="3af7784b-8660-4773-93b3-b3e9506a6d46" class="block-color-yellow_background">※<strong> 인터프리터 언어</strong>란 한 줄씩 소스 코드를 해석해서 그때그때 실행해 결과를 바로 확인할 수 있는 언어이다.</p><p id="d6af168a-6d09-4fea-b60e-d6a04e538b92" class="">
+</p><p id="62989d79-62ed-4e5e-b3c6-eed058fa33a2" class="">
+</p>
+
+&nbsp;
+
+<h2 id="8226c417-05e8-4207-b901-a97d3bc7893d" class="">파이썬의 특징</h2><p id="dec27f45-eeef-4848-95e1-8a05c55fb5b5" class="">파이썬은 <strong>공동작업 및 유지보수가 상대적으로 쉽고</strong> 편리하다.<strong> 무료</strong>이고, 상대적으로 문법이 쉬운 편에 속한다. 왜 쉽냐면, 사람의 사고 체계와 매우 닮아 있기 때문이다. 다른 코드들과는 달리,<strong> 인간의 사고체계 순서대로 코드를 짤 수 있기 때문에</strong>, 코드를 이해하고 익히는 데에 상대적으로 쉽다고 느껴지는 것이다.</p><p id="1a1d70a8-16e1-4e8e-bb76-d63ef2b46e0e" class="">참고링크: <a href="https://wikidocs.net/6">https://wikidocs.net/6</a></p><p id="1cd83677-3014-4d32-ac96-462fa5675e56" class="">
+</p><p id="8a3839db-6bcb-42f6-af5a-bb5f2a43b3ca" class="">
+</p>
+
+&nbsp;
+
+<h2 id="2d1cddf9-fae2-4c2f-968c-709861fdce51" class="">파이썬 버전 3</h2><p id="2d0bdaad-d226-4a1d-8d71-8c5d140d0804" class="">파이썬의 이전 버전(2.x)의 경우, 2.7을 끝으로 2020년 1월 1일 이후로 유지보수 없이 종료됐다. <strong>3버전은 새롭게 버전이 계속 증가&amp;관리되고 있는 방식</strong>이므로, 3버전을 사용하는 것이 좋다.</p><p id="b0a8c6cf-d323-4a58-841e-493bed255625" class="">
+</p><p id="31480d71-1494-4a06-8f74-a9a976944555" class="">그렇다면 파이썬 이전 버전과 현 버전의 대표적 차이는 무엇이 있을까? 한번 알아보자.</p><p id="77a8846d-a14a-4c92-8cb3-ca65cdbd7d50" class="">
+</p><ul id="72ce6780-1aeb-4a3b-9bd3-4f9d28ad44c0" class="bulleted-list"><li>파이썬 2.x 버전은 ※ASCII 방식(Unicode 쓰려면 별도 설정 필요)이었으나, 3.x의 기본 저장방식은 ※Unicode다. </li></ul><ul id="ce4de118-3ad3-44cb-b18d-3ad55bf6810b" class="bulleted-list"><li>파이썬 3은 모든 변수가 객체(object)로 처리된다. </li></ul><ul id="6353f1db-2d90-4405-9838-2c5f5b7c92a2" class="bulleted-list"><li>파이썬 3은 파이썬 2와 달리, print 시 괄호를 필수로 작성해야 한다.</li></ul><ul id="cff6b820-b33e-4e3e-b264-d068d3478e34" class="bulleted-list"><li>파이썬 3은 파이썬 2와 달리, int 나누기 결과가 float이다. 파이썬 2는 나눈 결과값의 타입이 int였다.</li></ul><p id="3a5ceeb1-67b8-4cc3-9699-4ffb48227196" class="">
+</p><figure class="block-color-yellow_background callout" style="white-space:pre-wrap;display:flex" id="c6f8a61c-9a7e-48d3-bff4-1f301b1c725f"><div style="background-color: rgb(238, 125, 200);"><span class="icon">❓</span></div><div  style="background-color: rgb(238, 125, 200);"><strong>여기서 잠깐! ASCII &amp; Unicode란?</strong>
+
+문자나 기호 집합을 컴퓨터에 저장 혹은 통신 목적으로 사용할 때, 특정 부호로 인코딩을 해야 하는데, 이러한 인코딩 방식 중 대표적 방식이 ASCII와 Unicode다. ASCII, ANSI, 그리고 Unicode를 살펴보자.
+
+<strong>1) ASCII</strong>
+7비트, 즉 128개의 고유값만 사용하는 부호체계. 컴퓨터 저장 기본 단위가 1바이트(8비트)인데, 이는 1비트를 통신에러 검출을 위해 사용(Parity Bit)하므로 7비트만 사용한다. 이는 모든 알파벳(대소문자구분), 숫자, 부호들이 고유 숫자값으로 할당되어 있다. (총 128개)
+
+
+<strong>2) ANSI</strong>
+128개로 모든 언어 표현에는 한계가 있었으므로, ANSI가 탄생했다. 1비트 더 늘어나 256개의 부호를 할당할 수 있게 됐다. 그럼에도 한국어나 중국어같은 언어를 인코딩하기 어려웠다. 그래서 Unicode가 탄생했다.
+
+
+<strong>3) Unicode</strong>
+전 세계 언어의 문자를 정의하기 위한 국제 표준 코드다. 총 2바이트(16비트. 2의 16제곱 = 65,536개)로 구성돼 있다. 그럼에도 고어나 아랍어 등을 담기에는 부족했기 때문에, Unicode는 보충언어판을 통해  기본 영역의 일부를 상위대행 &amp; 하위대행으로 할당해 약 백만 자가 넘는 문자를 추가로 정의할 수 있게 됐다.</div></figure><p id="74a967b5-dacb-469c-aa9a-90dd06728d2b" class="">
+
+</p><p id="938b4c3f-c4de-4ec9-9e84-dd052f08853e" class="">
+</p><p id="b702b920-4ff9-4f88-ad44-775aaddfb5ef" class="">
+</p><p id="a39880bc-9b9a-4430-b59f-a103724061f5" class="">
+</p><p id="b3c3cb9d-0d59-477a-bf97-77c7d58ef462" class="">이런 차이가 있기 때문에, pthon 2와 python 3은 완벽한 호환이 되지 않을 수 있다. 이럴 때, 소스코드 버전을 변환하는 코드를 활용해주어야 한다고 한다. (아직 나는 소스코드 변환은 해본 적은 없지만! 이런 상황이 생길 수 있으니 잊지 않고 참고하자!)</p><p id="477a8da1-740b-46a1-afee-861897dc4d42" class="">참고링크: <a href="https://zetawiki.com/wiki/Python_%EC%86%8C%EC%8A%A4%EC%BD%94%EB%93%9C_%EB%B2%84%EC%A0%84_%EB%B3%80%ED%99%98_2to3.py">https://zetawiki.com/wiki/Python_소스코드_버전_변환_2to3.py</a></p><p id="d08725d9-80e1-4d85-a4ce-e3cdf87c67f3" class="">
+</p><p id="bc4d5f91-ad63-4199-a389-f0bc51a08c93" class="">
+</p><p id="2fe87ee7-d21d-4c90-8249-51597884c56e" class="">
+</p><p id="aca5eada-bbc6-4190-83bd-450da51237f6" class="">
