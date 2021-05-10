@@ -20,8 +20,9 @@ categories: ['Computer Science']
 
 <p>코드를 보면 이해가 조금 더 쉬울 수 있다. 만약, '정수를 입력받고, 입력숫자가 출력될 때까지 입력숫자만큼 반복하여 난수를 출력하고 1개의 종료메시지를 띄워야 한다' 라면, 아래처럼 클래스나 인스턴스를 모두 object화 시켜 프로그래밍을 구성할 수 있다. 이는 난수에 한해 범용적으로 사용될 수 있으므로, 최소의 input으로 최대의 output을 산출할 수 있다. 또한  특정 object를 컴퓨터라는 도구에 인식시키는 데에 목적을 둔다. <br>즉, 사람의 사고를 컴퓨터로 효율적이게 옮기는 작업이라 볼 수 있겠다. </p>
 
-<script language="Python">
-	
+&nbsp;
+
+<pre><code>
 import random
 
 input_num = int(input())
@@ -36,19 +37,33 @@ for i in range(input_num):
 
 else:
   print('exit')
-</script>
+</code></pre>
+
+&nbsp;
 
 <p id="57e6d8c4-2f51-4967-b2c7-57c126905bb7" class="">이제 아래 포스팅에서 개념을 하나씩 천천히 알아보도록 하자.</p>
+
+&nbsp;
+
+&nbsp;
 
 <h3 id="eb3c841f-51b6-41d2-a972-fd022933a569" class="">객체 틀, 클래스(Class)</h3><p id="65ca1c2b-5e41-4bb7-8d6b-dc9b07ccd38a" class="">우리가 인스타그램 어플을 만든다고 가정해보자.</p><p id="b8333808-09e8-4d3a-b975-4647be831819" class="">이때 User객체를 생성한다고 했을 때, 이 User 객체의 속성과 행동을 정해야 한다. 이는 <strong>User 객체의 틀</strong>이라고 할 수 있다. 이 틀을 기반으로 User 들을 마치 붕어빵처럼 찍어 생성하면 된다. 이처럼, 객체의 틀을 의미하는 것이 Class라고 한다. </p><p id="633e2d1f-2925-4a52-b45b-d52a201d0739" class="">클래스를 생성하면, 객체(=인스턴스)를 비교적 수월히 여러 개 만들 수 있다.</p><p id="7bd04b81-d3be-461e-962d-322f939e5a17" class="">
 </p>
 
-<p id="cb372496-8219-4ddc-ba80-4e4e4446cd1d" class=""><strong>기본적인 class 생성 방법</strong></p><pre id="15bedd08-893f-4905-a943-17f2ada4d4e7" class="code"><code>class User:
+<p id="cb372496-8219-4ddc-ba80-4e4e4446cd1d" class=""><strong>기본적인 class 생성 방법</strong></p>
+
+&nbsp;
+
+<pre id="15bedd08-893f-4905-a943-17f2ada4d4e7" class="code"><code>class User:
 	pass
 
 user_1 = User()
 user_2 = User()</code></pre><p id="9f240159-0cdd-4c49-aed8-cc324edf3344" class="">
-</p><p id="e8f8cba2-7a27-41c7-972d-a6d992379b91" class="">User Class를 이용해 &#x27;user_1&#x27;, &#x27;user_2&#x27; 라는 객체를 만든 과정이다. (아직은 기초 작업이므로, 별도의 단계를 지정하지 않았다.) 마치 같은 붕어빵 틀로 찍었어도 슈크림 붕어빵과 팥 붕어빵은 다르듯, <strong>user_1과 user_2는 엄연히 다른 객체</strong>라는 점이 큰 특징이다.</p><p id="d2a7cd55-c928-41ef-91a9-7823c0cca874" class="">
+</p>
+
+&nbsp;
+
+<p id="e8f8cba2-7a27-41c7-972d-a6d992379b91" class="">User Class를 이용해 &#x27;user_1&#x27;, &#x27;user_2&#x27; 라는 객체를 만든 과정이다. (아직은 기초 작업이므로, 별도의 단계를 지정하지 않았다.) 마치 같은 붕어빵 틀로 찍었어도 슈크림 붕어빵과 팥 붕어빵은 다르듯, <strong>user_1과 user_2는 엄연히 다른 객체</strong>라는 점이 큰 특징이다.</p><p id="d2a7cd55-c928-41ef-91a9-7823c0cca874" class="">
 </p><p id="84d0c10e-45f7-4dc0-9744-8aacfeb568b4" class="">오늘은 아주 기초적인 class 개념과 객체 개념에 대해 살펴보았다. 다음 포스팅에서는 <strong>다양한 예시 및 보다 깊은 개념</strong>을 설명할 예정이다.</p></div>
 
 &nbsp;
