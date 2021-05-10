@@ -7,11 +7,43 @@ background: '/img/posts/CS_01_프로그래밍사진.jpg'
 categories: ['Computer Science']
 ---
 
-<article id="cded3080-ad18-4ee3-aaef-0b22473727f2" class="page sans"><header><h1 class="page-title">2021-04-20 객체지향</h1><table class="properties"><tbody><tr class="property-row property-row-select"><th><span class="icon property-icon"><svg viewBox="0 0 14 14" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.4);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesSelect"><path d="M7,13 C10.31348,13 13,10.31371 13,7 C13,3.68629 10.31348,1 7,1 C3.68652,1 1,3.68629 1,7 C1,10.31371 3.68652,13 7,13 Z M3.75098,5.32278 C3.64893,5.19142 3.74268,5 3.90869,5 L10.09131,5 C10.25732,5 10.35107,5.19142 10.24902,5.32278 L7.15771,9.29703 C7.07764,9.39998 6.92236,9.39998 6.84229,9.29703 L3.75098,5.32278 Z"></path></svg></span>상태</th><td></td></tr></tbody></table></header><div class="page-body"><p id="a02e278b-fedf-4e6b-8a59-7c59b163733f" class="">오늘은 객체지향 프로그래밍의 초초초 기초를 간단히 설명해볼 예정이다. 무엇이든 기본을 탄탄히 다지는 것이 중요한 법! 객체와 객체지향 프로그래밍의 개념에 대해 살펴보고, 객체와 class의 관계를 살펴보도록 하자. (보다 더 흥미로운 개념은 다음 포스팅에서..!)</p><p id="7b744b10-376e-4463-9c33-50d9bbb6a332" class="">
-</p><h3 id="99eb4b86-318d-4928-9197-933961fb4de9" class="">객체란?</h3><p id="c0bafa43-646f-4811-b3f1-136b041339b0" class="">속성과 행동으로 이루어진 존재, 즉 <strong>우리가 살면서 보는 모든 존재</strong>를 말한다. </p><p id="7f8e69e2-5afe-4daf-8f16-0858388cb650" class="">예를 들어, 인스타그램 유저는 속성으로 &quot;이메일 주소 비밀번호 친구목록&quot; 등이 있다. 그리고 &quot;좋아요 친구추가&quot; 등의 행동을 할 수 있다. 따라서 <strong>속성과 행동이 존재하므로 객체</strong>라고 할 수 있다.</p><p id="8392779b-40c8-49a8-bba6-6f0bdb35203b" class="">자동차처럼 <strong>현실에 존재</strong>하든, <strong>가상에 존재</strong>하든 <span style="border-bottom:0.05em solid"><strong>속성과 행동을 떠올릴 수 있다면 객체</strong></span>라고 할 수 있다.</p><p id="f4b4264f-6bec-4b14-9683-f7e489e495c2" class="">
-</p><h3 id="32d82e66-b873-437b-b56d-77a0d4ce6fc2" class="">객체지향 프로그래밍이란?</h3><p id="af166007-650a-4ece-8535-cb93a41ba562" class="">프로그램을 여러개의 독립된 객체들과 객체들간의 상호작용으로 파악하는 프로그래밍 접근법이다.</p><p id="7e7717ac-ef83-455e-98a7-d34cf01e6ed6" class="">즉, <strong>프로그램을 객체 간 소통으로 이해하는 것</strong>이다.</p><p id="e47ce6bd-028a-4ad1-8c23-b8529cfc11de" class="">객체지향 프로그래밍으로 프로그램 만드려면 세 가지 순서를 따라야 한다. 그 순서는 아래와 같다.</p><ol id="b9201646-aefb-4a0f-85d8-0821319bb90c" class="numbered-list" start="1"><li><strong>어떤 객체를 생성할지 결정</strong></li></ol><ol id="293b9aca-f3d2-4a6b-b01f-51d8c47bfb77" class="numbered-list" start="2"><li><strong>해당 객체의 속성과 행동을 결정</strong></li></ol><ol id="b2763e73-2015-4c59-9572-327d8e6b0705" class="numbered-list" start="3"><li><strong>객체 간 어떻게 소통할 것인지 결정</strong></li></ol><p id="09e35e99-40bf-4949-8fef-ba13deb3449a" class="">
-</p><p id="57e6d8c4-2f51-4967-b2c7-57c126905bb7" class="">이제 해당 포스팅에서 천천히 알아보도록 하자./</p><h3 id="eb3c841f-51b6-41d2-a972-fd022933a569" class="">객체 틀, 클래스(Class)</h3><p id="65ca1c2b-5e41-4bb7-8d6b-dc9b07ccd38a" class="">우리가 인스타그램 어플을 만든다고 가정해보자.</p><p id="b8333808-09e8-4d3a-b975-4647be831819" class="">이때 User객체를 생성한다고 했을 때, 이 User 객체의 속성과 행동을 정해야 한다. 이는 <strong>User 객체의 틀</strong>이라고 할 수 있다. 이 틀을 기반으로 User 들을 마치 붕어빵처럼 찍어 생성하면 된다. 이처럼, 객체의 틀을 의미하는 것이 Class라고 한다. </p><p id="633e2d1f-2925-4a52-b45b-d52a201d0739" class="">클래스를 생성하면, 객체(=인스턴스)를 비교적 수월히 여러 개 만들 수 있다.</p><p id="7bd04b81-d3be-461e-962d-322f939e5a17" class="">
-</p><p id="cb372496-8219-4ddc-ba80-4e4e4446cd1d" class=""><strong>기본적인 class 생성 방법</strong></p><pre id="15bedd08-893f-4905-a943-17f2ada4d4e7" class="code"><code>class User:
+<p id="a02e278b-fedf-4e6b-8a59-7c59b163733f" class="">오늘은 객체지향 프로그래밍의 초초초 기초를 간단히 설명해볼 예정이다. 무엇이든 기본을 탄탄히 다지는 것이 중요한 법! 객체와 객체지향 프로그래밍의 개념에 대해 살펴보고, 객체와 class의 관계를 살펴보도록 하자. (보다 더 흥미로운 개념은 다음 포스팅에서..!)</p><p id="7b744b10-376e-4463-9c33-50d9bbb6a332" class="">
+</p>
+
+<h3 id="99eb4b86-318d-4928-9197-933961fb4de9" class="">객체란?</h3><p id="c0bafa43-646f-4811-b3f1-136b041339b0" class="">속성과 행동으로 이루어진 존재, 즉 <strong>우리가 살면서 보는 모든 존재</strong>를 말한다. </p><p id="7f8e69e2-5afe-4daf-8f16-0858388cb650" class="">예를 들어, 인스타그램 유저는 속성으로 &quot;이메일 주소 비밀번호 친구목록&quot; 등이 있다. 그리고 &quot;좋아요 친구추가&quot; 등의 행동을 할 수 있다. 따라서 <strong>속성과 행동이 존재하므로 객체</strong>라고 할 수 있다.</p><p id="8392779b-40c8-49a8-bba6-6f0bdb35203b" class="">자동차처럼 <strong>현실에 존재</strong>하든, <strong>가상에 존재</strong>하든 <span style="border-bottom:0.05em solid"><strong>속성과 행동을 떠올릴 수 있다면 객체</strong></span>라고 할 수 있다.</p><p id="f4b4264f-6bec-4b14-9683-f7e489e495c2" class="">
+</p>
+
+<h3 id="32d82e66-b873-437b-b56d-77a0d4ce6fc2" class="">객체지향 프로그래밍이란?</h3><p id="af166007-650a-4ece-8535-cb93a41ba562" class="">프로그램을 여러개의 독립된 객체들과 객체들간의 상호작용으로 파악하는 프로그래밍 접근법이다.</p><p id="7e7717ac-ef83-455e-98a7-d34cf01e6ed6" class="">즉, <strong>프로그램을 객체 간 소통으로 이해하는 것</strong>이다.</p><p id="e47ce6bd-028a-4ad1-8c23-b8529cfc11de" class="">객체지향 프로그래밍으로 프로그램 만드려면 세 가지 순서를 따라야 한다. 그 순서는 아래와 같다.</p><ol id="b9201646-aefb-4a0f-85d8-0821319bb90c" class="numbered-list" start="1"><li><strong>어떤 객체를 생성할지 결정</strong></li></ol><ol id="293b9aca-f3d2-4a6b-b01f-51d8c47bfb77" class="numbered-list" start="2"><li><strong>해당 객체의 속성과 행동을 결정</strong></li></ol><ol id="b2763e73-2015-4c59-9572-327d8e6b0705" class="numbered-list" start="3"><li><strong>객체 간 어떻게 소통할 것인지 결정</strong></li></ol><p id="09e35e99-40bf-4949-8fef-ba13deb3449a" class="">
+</p>
+
+&nbsp;
+
+<p>코드를 보면 이해가 조금 더 쉬울 수 있다. 만약, '정수를 입력받고, 입력숫자가 출력될 때까지 입력숫자만큼 반복하여 난수를 출력하고 1개의 종료메시지를 띄워야 한다' 라면, 아래처럼 클래스나 인스턴스를 모두 object화 시켜 프로그래밍을 구성할 수 있다. 이는 난수에 한해 범용적으로 사용될 수 있으므로, 최소의 input으로 최대의 output을 산출할 수 있다. 또한  특정 object를 컴퓨터라는 도구에 인식시키는 데에 목적을 둔다. <br>즉, 사람의 사고를 컴퓨터로 효율적이게 옮기는 작업이라 볼 수 있겠다. </p>
+
+<script language="Python">
+	
+import random
+
+input_num = int(input())
+
+for i in range(input_num):
+  ran_num = random.randint(1,100)
+  print(ran_num, end = ' ')
+
+  if ran_num == input_num:
+    print("input random number print")
+    continue
+
+else:
+  print('exit')
+</script>
+
+<p id="57e6d8c4-2f51-4967-b2c7-57c126905bb7" class="">이제 아래 포스팅에서 개념을 하나씩 천천히 알아보도록 하자.</p>
+
+<h3 id="eb3c841f-51b6-41d2-a972-fd022933a569" class="">객체 틀, 클래스(Class)</h3><p id="65ca1c2b-5e41-4bb7-8d6b-dc9b07ccd38a" class="">우리가 인스타그램 어플을 만든다고 가정해보자.</p><p id="b8333808-09e8-4d3a-b975-4647be831819" class="">이때 User객체를 생성한다고 했을 때, 이 User 객체의 속성과 행동을 정해야 한다. 이는 <strong>User 객체의 틀</strong>이라고 할 수 있다. 이 틀을 기반으로 User 들을 마치 붕어빵처럼 찍어 생성하면 된다. 이처럼, 객체의 틀을 의미하는 것이 Class라고 한다. </p><p id="633e2d1f-2925-4a52-b45b-d52a201d0739" class="">클래스를 생성하면, 객체(=인스턴스)를 비교적 수월히 여러 개 만들 수 있다.</p><p id="7bd04b81-d3be-461e-962d-322f939e5a17" class="">
+</p>
+
+<p id="cb372496-8219-4ddc-ba80-4e4e4446cd1d" class=""><strong>기본적인 class 생성 방법</strong></p><pre id="15bedd08-893f-4905-a943-17f2ada4d4e7" class="code"><code>class User:
 	pass
 
 user_1 = User()
