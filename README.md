@@ -1,152 +1,51 @@
-# [Start Bootstrap - Clean Blog Jekyll](https://startbootstrap.com/themes/clean-blog-jekyll/) - Official Jekyll Version
+👩🏻‍💻 현재 2021 -
 
-[Clean Blog Jekyll](https://startbootstrap.com/themes/clean-blog-jekyll/) is a stylish, responsive blog theme for [Bootstrap](https://getbootstrap.com/) created by [Start Bootstrap](https://startbootstrap.com/). This theme features a blog homepage, about page, contact page, and an example post page along with a working contact form powered by [Formspree](https://formspree.io/).
+- [AI 부트캠프] 1기 활동 20.12-
+- [대외활동] 스마트 해상물류 ICT 멘토링] 21.03-
+- [창업] 스마트 해상물류 창업오디션 21.04-
+- [대외활동] 코드잇 대학생코딩캠프 21.04-
+- [경진대회] 네이버 AI RUSH 21.05-
 
-This repository holds the official Jekyll version of the Clean Blog theme on Start Bootstrap!
+&nbsp;
 
-## Preview
+🗃 지난 경력
 
-[![Clean Blog (Jekyll) Preview](https://startbootstrap.com/assets/img/screenshots/themes/clean-blog-jekyll.png)](http://StartBootstrap.github.io/startbootstrap-clean-blog-jekyll/)
+- [현장실습] 데이터분석 직무 20.08-20.12
+- [수상경력] [대한산업공학회 데이터 분석 컴페티션] 최우수상 19.08
+- [수상경력] [Tconomy 블록체인 공모전] 은상 19.03
+- [수상경력] [2020 기계 시설물 AI 학습용 데이터 활용 경진대회] 모델링 정확도 최고점 21.02
+- [대외활동] 한국청년물류포럼 | 기획부 18.08-19.03
+- [대외활동] YPICS(국내유일SCM 청년학회) | 6기 회장 19.08-20.03
+- [대외활동] GLSC(글로벌 물류SCM 컨설턴트 양성과정) | 멘티 19.08-20.03
+- [대외활동] Tconomy 신문사(블록체인 신문사) | 컬럼니스트 19.03-19.06
+- [대외활동] 대한산업공학회 FIELD CAMP 19.08
+- [봉사활동] 십시일밥 외대지사 | 부이사 20.08-20.12
+ 
+ &nbsp;
 
-**[View Live Preview](http://StartBootstrap.github.io/startbootstrap-clean-blog-jekyll/)**
 
-## Installation & Setup
+🗃 자격증
 
-### Using RubyGems
+- [어학] OPIC | 레벨 IH  20.02
+- [자격] 운전면허 | 2종 보통
+- [자격] 유통관리사 | 3급
+- [자격] 빅데이터분석기사 |  
 
-When installing the theme using RubyGems, demo images, posts, and pages are not included. Follow the instructions below for complete setup.
 
-1. (Optional) Create a new Jekyll site: `jekyll new my-site`
-2. Replace the current theme in your `Gemfile` with `gem "jekyll-theme-clean-blog"`.
-3. Install the theme (run the command inside your site directory): `bundle install`
-4. Replace the current theme in your `_config.yml` file with `theme: jekyll-theme-clean-blog`.
-5. Build your site: `bundle exec jekyll serve`
+&nbsp;
 
-Assuming there are no errors and the site is building properly, follow these steps next:
 
-1. Create the following pages if they do not exist already (or change the extension of existing markdown files from `.md` to `.html`):
+🎓 출신 학교, 학과를 소개합니다
 
-   * `index.html` - set to `layout: home`
-   * `about.html` - set to `layout: page`
-   * `contact.html` - set to `layout: page`
-   * `posts/index.html` - set to `layout: page` (you will also need to create a `posts` directory)
+한국외국어대학교 졸업예정 (유예中) 2017.02-2021.09
 
-2. Configure the `index.html` front matter. Example:
+- 전공: 산업경영공학 | 부전공: 스페인어통번역학
+- 이수 전공수업: 데이터마이닝, 공학통계, 컴퓨터프로그래밍, 기업정보시스템 등 다수
 
-    ```markdown
-    ---
-    layout: home
-    background: '/PATH_TO_IMAGE'
-    ---
-    ```
 
-3. Configure the `about.html`, `contact.html`, and `posts/index.html` front matter. Example:
+🐯 저는 이런 사람이에요
 
-    ```markdown
-    ---
-    layout: page
-    title: Page Title
-    description: This is the page description.
-    background: '/PATH_TO_IMAGE'
-    ---
-    ```
-
-4. For each post in the `_posts` directory, update the front matter. Example:
-
-    ```markdown
-    ---
-    layout: post
-    title: "Post Title"
-    subtitle: "This is the post subtitle."
-    date: YYYY-MM-DD HH:MM:SS
-    background: '/PATH_TO_IMAGE'
-    ---
-    ```
-
-    For reference, look at the [demo repository](https://github.com/StartBootstrap/startbootstrap-clean-blog-jekyll) to see how the files are set up.
-
-5. Add the form to the `contact.html` page. Add the following code to your `contact.html` page:
-
-    ```html
-    <form name="sentMessage" id="contactForm" novalidate>
-      <div class="control-group">
-        <div class="form-group floating-label-form-group controls">
-          <label>Name</label>
-          <input type="text" class="form-control" placeholder="Name" id="name" required data-validation-required-message="Please enter your name.">
-          <p class="help-block text-danger"></p>
-        </div>
-      </div>
-      <div class="control-group">
-        <div class="form-group floating-label-form-group controls">
-          <label>Email Address</label>
-          <input type="email" class="form-control" placeholder="Email Address" id="email" required data-validation-required-message="Please enter your email address.">
-          <p class="help-block text-danger"></p>
-        </div>
-      </div>
-      <div class="control-group">
-        <div class="form-group col-xs-12 floating-label-form-group controls">
-          <label>Phone Number</label>
-          <input type="tel" class="form-control" placeholder="Phone Number" id="phone" required data-validation-required-message="Please enter your phone number.">
-          <p class="help-block text-danger"></p>
-        </div>
-      </div>
-      <div class="control-group">
-        <div class="form-group floating-label-form-group controls">
-          <label>Message</label>
-          <textarea rows="5" class="form-control" placeholder="Message" id="message" required data-validation-required-message="Please enter a message."></textarea>
-          <p class="help-block text-danger"></p>
-        </div>
-      </div>
-      <br>
-      <div id="success"></div>
-      <div class="form-group">
-        <button type="submit" class="btn btn-primary" id="sendMessageButton">Send</button>
-      </div>
-    </form>
-    ```
-
-    Make sure you have the `email` setting in your `_config.yml` file set to a working email address! Once this is set, fill out the form and then check your email, verify the email address using the link sent to you by Formspree, and then the form will be working!
-
-6. Build your site: `bundle exec jekyll serve`
-
-### Using Core Files
-
-When using the core files, the demo images, posts, and pages are all included with the download. After following the instructions below, you can then go and change the content of the pages and posts.
-
-1. [Download](https://github.com/StartBootstrap/startbootstrap-clean-blog-jekyll/archive/master.zip) or Clone the repository.
-2. Update the following configuration settings in your `_config.yml` file:
-   - `baseurl`
-   - `url`
-   - `title`
-   - `email` (after setting this setting to a working email address, fill out the form on the contact page and send it - then check your email and verify the address and the form will send you messages when used)
-   - `description`
-   - `author`
-   - `twitter_username` (Optional)
-   - `facebook_username` (Optional)
-   - `github_username` (Optional)
-   - `linkedin_username` (Optional)
-   - `instagram_username` (Optional)
-3. Build your site: `bundle exec jekyll serve`
-
-## Bugs and Issues
-
-Have a bug or an issue with this template? [Open a new issue](https://github.com/StartBootstrap/startbootstrap-clean-blog-jekyll/issues) here on GitHub!
-
-## About
-
-Start Bootstrap is an open source library of free Bootstrap templates and themes. All of the free templates and themes on Start Bootstrap are released under the MIT license, which means you can use them for any purpose, even for commercial projects.
-
-* <https://startbootstrap.com>
-* <https://twitter.com/SBootstrap>
-
-Start Bootstrap was created by and is maintained by **[David Miller](http://davidmiller.io/)**.
-
-* <http://davidmiller.io>
-* <https://twitter.com/davidmillerskt>
-* <https://github.com/davidtmiller>
-
-Start Bootstrap is based on the [Bootstrap](https://getbootstrap.com/) framework created by [Mark Otto](https://twitter.com/mdo) and [Jacob Thorton](https://twitter.com/fat).
-
-## Copyright and License
-
-Copyright 2013-2020 Start Bootstrap LLC. Code released under the [MIT](https://github.com/StartBootstrap/startbootstrap-clean-blog-jekyll/blob/gh-pages/LICENSE) license.
+- [프로그래밍] Python, Java-Spring
+- [사무작업] Excel, PPT, SAP ERP
+- [취미] 글쓰기 책읽기 웹툰보기 그림그리기
+- [어학] 꾸준한 영어공부와 스페인어 공부 중!
