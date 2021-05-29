@@ -643,9 +643,17 @@ blockquote {
 </p><hr id="14b5fd19-5423-4857-8887-c4dd6667ef1a"/><h3 id="0c05d955-06fe-4092-8ed0-28486c0c517e" class="">폰 노이만 아키텍쳐</h3><p id="178431d1-ed3b-48c8-bd2c-51eebcf6f7a3" class=""><strong>instruction(-execution) cycle</strong>을 폰노이만 아키텍쳐라고 한다.</p><p id="ded941a5-0061-481a-bdc2-8296e123834b" class="">→ Instruction Set(컴퓨터에 명령을 내려주는 명령어들의 집합) 정의 후, 이 정의어들로 구성된 컴퓨터 프로그램을 메모리에 로딩. 메모리에 있는 명령어들을 CPU가<span style="border-bottom:0.05em solid"><strong> fetch(인출). 그리고 fetch된 정보를 다시 execute(실행). 이를 반복</strong></span>하는 사이클</p><p id="7f20b0fd-3cc8-42c0-af04-5942124c6b9e" class="">
 </p><p id="e6bffd88-9656-454d-9cd5-2bcb35876838" class="">※ Instruction Register: CPU내에서 처리할 명령어나 연산에 사용할 값이나 연산 결과를 일시적으로 기억하는 장치. 이 연산결과 등을 메모리에 저장하기도 함.</p><p id="d87e98d3-93cd-4f6b-87b3-2b42839ea29d" class="">
 </p><hr id="f9bd7534-18fd-4609-bb0b-06f161b603be"/><p id="63dfc4ee-026e-40e2-a09d-2004e7d77218" class="">
-</p><h3 id="d9f75010-933b-41a1-a528-d907f9b891f8" class="">Storage Sys.</h3><p id="413c2f5f-fc53-4ad5-86cc-278b1c93a6bb" class="">저장 용량과, 접근 시간(Access time)에 따라 구조적으로 구성됨. 운영체제는 이 저장 시스템들도 관리해주어야 함.</p><p id="96276d06-aa25-4b0f-9d59-a8390fd0915e" class="">
-</p><p id="d94894b2-cd77-407b-809c-6e385101a6ef" class="">🔥사진</p><p id="da2f1afa-ce23-4c19-b260-757f422ef2e1" class="">
-</p><p id="e1fdc49b-e73d-47e0-9347-9da7731b5dd4" class="">
+</p><h3 id="d9f75010-933b-41a1-a528-d907f9b891f8" class="">Storage Sys.</h3><p id="413c2f5f-fc53-4ad5-86cc-278b1c93a6bb" class="">저장 용량과, 접근 시간(Access time)에 따라 구조적으로 구성됨. 운영체제는 이 저장 시스템들도 관리해주어야 함.</p><p id="96276d06-aa25-4b0f-9d59-a8390fd0915e" class=""></p>
+
+	
+	
+	
+	<img src='http://drive.google.com/uc?export=view&id=1acWeB4ZedqlhiC2tgrKjy0qHm2lfQe8g'>
+	
+	
+	
+	
+	<p id="e1fdc49b-e73d-47e0-9347-9da7731b5dd4" class="">
 </p><hr id="cd020f12-18f2-4197-9ae2-c80bc2f00831"/><h3 id="4544e01d-d827-4a71-9073-6cf8551e9425" class="">Computer Sys. Components</h3><p id="c722f25c-e2c2-46f1-8dd1-1e31cbf10617" class="">이제는 시스템에 CPU와 메모리 한 개씩 있는 구조는 거의 존재치 않음. 아래와 같은 구성으로 이뤄짐. </p><ul id="19f93239-29c5-42fc-b0bb-01aab301f65d" class="bulleted-list"><li>CPU  (컴퓨터 시스템의 두뇌 역할을 하는 중앙처리장치)</li></ul><ul id="991bf96a-ab8a-4bf8-a239-512a6a2957f3" class="bulleted-list"><li>Processor </li></ul><ul id="7d1dacd6-ff9a-40fa-a77b-7c0e14738888" class="bulleted-list"><li>Core </li></ul><ul id="d5d3409f-d30d-4648-bb67-20c577c73b60" class="bulleted-list"><li>Multi Core </li></ul><ul id="17fc51ff-7e1d-4719-a992-f7e40b0acd93" class="bulleted-list"><li>Multi Processor  </li></ul><p id="aeb9c999-0ce1-4bf2-b63c-552314df4f24" class="">
 </p><p id="eda1c7bf-893a-4d6e-95d4-9d1f445df2c6" class=""><strong>SMP(Symmetric Multiprocessing)</strong></p><p id="866ea351-ea23-4ed2-be8c-ea4a3281b712" class="">메모리는 한 개인데, 여러 개 CPU가 각각의 register와 cache를 갖고 달려 있는 구조</p><p id="e73476c9-cadb-4633-ab5b-316028468094" class="">단점: 비용이 많이 듦</p><figure id="efbbb7f0-6ace-4d3d-8bf5-dbba0d1ae2b1" class="image"><a href="02%20%E1%84%8B%E1%85%AE%E1%86%AB%E1%84%8B%E1%85%A7%E1%86%BC%E1%84%8E%E1%85%A6%E1%84%8C%E1%85%A6%E1%84%8B%E1%85%B4%20%E1%84%80%E1%85%A2%E1%84%82%E1%85%A7%E1%86%B7%E1%84%80%E1%85%AA%20%E1%84%80%E1%85%AE%E1%84%8C%E1%85%A9%20efbbb7f06ace4d3d8bf5dbba0d1ae2b1/Untitled.png"><img style="width:558px" src="02%20%E1%84%8B%E1%85%AE%E1%86%AB%E1%84%8B%E1%85%A7%E1%86%BC%E1%84%8E%E1%85%A6%E1%84%8C%E1%85%A6%E1%84%8B%E1%85%B4%20%E1%84%80%E1%85%A2%E1%84%82%E1%85%A7%E1%86%B7%E1%84%80%E1%85%AA%20%E1%84%80%E1%85%AE%E1%84%8C%E1%85%A9%20efbbb7f06ace4d3d8bf5dbba0d1ae2b1/Untitled.png"/></a></figure><p id="8287999b-3a6d-4dc7-9e95-e6439d59e1e0" class="">
 </p><p id="95c1c7a3-05c8-4dfe-9de2-c914502d6403" class="">
