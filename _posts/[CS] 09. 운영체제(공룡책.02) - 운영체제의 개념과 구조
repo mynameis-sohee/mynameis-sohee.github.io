@@ -1,0 +1,686 @@
+---
+layout: post
+title: "[CS] 09. 운영체제(공룡책.02) - 운영체제의 개념과 구조"
+subtitle: "운영체제, 모드, 컴퓨터 환경"
+date: 2021-05-28 10:45:13
+background: '/img/posts/CS_01_프로그래밍사진.jpg'
+categories: ['Computer Science']
+---
+
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>02. 운영체제의 개념과 구조</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, YuMincho, "Yu Mincho", "Hiragino Mincho ProN", "Hiragino Mincho Pro", "Songti TC", "Songti SC", "SimSun", "Nanum Myeongjo", NanumMyeongjo, Batang, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, YuMincho, "Yu Mincho", "Hiragino Mincho ProN", "Hiragino Mincho Pro", "Songti TC", "Songti SC", "SimSun", "Nanum Myeongjo", NanumMyeongjo, Batang, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.highlight-default {
+}
+.highlight-gray {
+	color: rgb(155,154,151);
+}
+.highlight-brown {
+	color: rgb(100,71,58);
+}
+.highlight-orange {
+	color: rgb(217,115,13);
+}
+.highlight-yellow {
+	color: rgb(223,171,1);
+}
+.highlight-teal {
+	color: rgb(15,123,108);
+}
+.highlight-blue {
+	color: rgb(11,110,153);
+}
+.highlight-purple {
+	color: rgb(105,64,165);
+}
+.highlight-pink {
+	color: rgb(173,26,114);
+}
+.highlight-red {
+	color: rgb(224,62,62);
+}
+.highlight-gray_background {
+	background: rgb(235,236,237);
+}
+.highlight-brown_background {
+	background: rgb(233,229,227);
+}
+.highlight-orange_background {
+	background: rgb(250,235,221);
+}
+.highlight-yellow_background {
+	background: rgb(251,243,219);
+}
+.highlight-teal_background {
+	background: rgb(221,237,234);
+}
+.highlight-blue_background {
+	background: rgb(221,235,241);
+}
+.highlight-purple_background {
+	background: rgb(234,228,242);
+}
+.highlight-pink_background {
+	background: rgb(244,223,235);
+}
+.highlight-red_background {
+	background: rgb(251,228,228);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(55, 53, 47, 0.6);
+	fill: rgba(55, 53, 47, 0.6);
+}
+.block-color-brown {
+	color: rgb(100,71,58);
+	fill: rgb(100,71,58);
+}
+.block-color-orange {
+	color: rgb(217,115,13);
+	fill: rgb(217,115,13);
+}
+.block-color-yellow {
+	color: rgb(223,171,1);
+	fill: rgb(223,171,1);
+}
+.block-color-teal {
+	color: rgb(15,123,108);
+	fill: rgb(15,123,108);
+}
+.block-color-blue {
+	color: rgb(11,110,153);
+	fill: rgb(11,110,153);
+}
+.block-color-purple {
+	color: rgb(105,64,165);
+	fill: rgb(105,64,165);
+}
+.block-color-pink {
+	color: rgb(173,26,114);
+	fill: rgb(173,26,114);
+}
+.block-color-red {
+	color: rgb(224,62,62);
+	fill: rgb(224,62,62);
+}
+.block-color-gray_background {
+	background: rgb(235,236,237);
+}
+.block-color-brown_background {
+	background: rgb(233,229,227);
+}
+.block-color-orange_background {
+	background: rgb(250,235,221);
+}
+.block-color-yellow_background {
+	background: rgb(251,243,219);
+}
+.block-color-teal_background {
+	background: rgb(221,237,234);
+}
+.block-color-blue_background {
+	background: rgb(221,235,241);
+}
+.block-color-purple_background {
+	background: rgb(234,228,242);
+}
+.block-color-pink_background {
+	background: rgb(244,223,235);
+}
+.block-color-red_background {
+	background: rgb(251,228,228);
+}
+.select-value-color-default { background-color: rgba(206,205,202,0.5); }
+.select-value-color-gray { background-color: rgba(155,154,151, 0.4); }
+.select-value-color-brown { background-color: rgba(140,46,0,0.2); }
+.select-value-color-orange { background-color: rgba(245,93,0,0.2); }
+.select-value-color-yellow { background-color: rgba(233,168,0,0.2); }
+.select-value-color-green { background-color: rgba(0,135,107,0.2); }
+.select-value-color-blue { background-color: rgba(0,120,223,0.2); }
+.select-value-color-purple { background-color: rgba(103,36,222,0.2); }
+.select-value-color-pink { background-color: rgba(221,0,129,0.2); }
+.select-value-color-red { background-color: rgba(255,0,26,0.2); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="48b5bf08-36fc-4020-b938-53ac0cd39ebf" class="page sans"><header><h1 class="page-title">02. 운영체제의 개념과 구조</h1></header><div class="page-body"><h3 id="807a5909-a1d5-42f0-a7b4-51764d7727a2" class="">운영체제</h3><ul id="008da111-979b-4b80-9355-8692bf0c4439" class="bulleted-list"><li>하드웨어를 운영하는 시스템</li></ul><ul id="a9abacff-4674-4a29-ac7a-026afedb8a97" class="bulleted-list"><li>어플리케이션, 유저, 하드웨어를 연결하는 시스템</li></ul><ul id="74a0a96e-fa17-4617-b92a-7a186d2b0f80" class="bulleted-list"><li>항상 running하는 시스템</li></ul><ul id="a3eae9c0-7a8f-444f-baf5-45a3fc1094b5" class="bulleted-list"><li><span style="border-bottom:0.05em solid"><strong>kernel</strong></span>에서 시스템과 어플리케이션 간 인터페이스 제공</li></ul><p id="0528102f-d53d-43f9-a7a3-094a60ecf70b" class="">
+</p><h3 id="a131e503-1009-470b-8f49-342b29dd5fe0" class="">전통적인 컴퓨터 시스템</h3><ul id="64afa627-1838-4aa9-b599-9ca3c9b55f1d" class="bulleted-list"><li>CPU, Bus (Bus를 통해 RAM, USB Controller, Disk Controller 등과 연결되어 있음)</li></ul><p id="2ca71f85-de9f-47ef-9897-a61058c2b5b8" class="">
+</p><p id="07f7c118-0d27-47e9-a5e9-9ab3e5c2e297" class=""><strong>부트스트랩</strong>: 발을 끼워 넣으면 신발이 쏙 들어가듯, CPU로 Memory 정보 가져오기 위해 ROM에서 명령어를 불러온다. 이를 부트스트랩이라고 한다. 이는 컴퓨터가 켜지자마자 바로 실행된다. </p><p id="5878637d-ce2f-4ead-9788-6c6c9f01ac40" class="">
+</p><p id="bcea4ec5-79e6-4a0d-b8a9-87b3d839f6af" class=""><strong>Interrupts:</strong> CPU가 특정 기능 수행하는 도중에 급하게 다른 일 처리하고자 할 때 사용할 수 있는 기능. I/O 디바이스 등에서 전달된 명령어를 우선순위에 맞게 시스템 Bus 통해 CPU로 전달.처리하는 과정. 즉, 어느 한 순간에 CPU가 실행하는 명령은 하나인데 다른 장치와의 대화는 어떻게 이루어지는가?에 대한 답이 된다.</p><p id="82ed893e-2c24-4abd-b1f8-e371f368c93b" class=""><a href="https://velog.io/@hyun0310woo/7.-%EC%9A%B4%EC%98%81%EC%B2%B4%EC%A0%9C-%EC%9D%B8%ED%84%B0%EB%9F%BD%ED%8A%B8%EC%97%90-%EB%8C%80%ED%95%B4%EC%84%9C">https://velog.io/@hyun0310woo/7.-운영체제-인터럽트에-대해서</a></p><figure class="block-color-purple_background callout" style="white-space:pre-wrap;display:flex" id="0eaaa39f-4d2a-4d90-b4ae-4c0ffe09a0c3"><div style="font-size:1.5em"><span class="icon">✅</span></div><div style="width:100%">fetch-execution 중에 interrupt를 처리하게 되면 실행중이던 연산의 중간 값들을 저장해야하므로 비효율적이다. 따라서 실행중이던 cycle이 종료된 후 interrupt 처리
+
+이 과정에서 약간의 오버헤드(시간과 메모리 등)가 있음(인터럽트의 종류, 처리 방식을 결정하기 위해 인터럽트 처리기 내에서 추가 명령어를 수행해야함)은 당연하지만 인터럽트를 허용하는 것이 처리기의 효율적 이용 측면에서 이익이기 때문에 인터럽트가 필요하다.</div></figure><p id="07f60fbc-6ef6-4764-a2ce-c22ca62b36b4" class="">
+</p><hr id="14b5fd19-5423-4857-8887-c4dd6667ef1a"/><h3 id="0c05d955-06fe-4092-8ed0-28486c0c517e" class="">폰 노이만 아키텍쳐</h3><p id="178431d1-ed3b-48c8-bd2c-51eebcf6f7a3" class=""><strong>instruction(-execution) cycle</strong>을 폰노이만 아키텍쳐라고 한다.</p><p id="ded941a5-0061-481a-bdc2-8296e123834b" class="">→ Instruction Set(컴퓨터에 명령을 내려주는 명령어들의 집합) 정의 후, 이 정의어들로 구성된 컴퓨터 프로그램을 메모리에 로딩. 메모리에 있는 명령어들을 CPU가<span style="border-bottom:0.05em solid"><strong> fetch(인출). 그리고 fetch된 정보를 다시 execute(실행). 이를 반복</strong></span>하는 사이클</p><p id="7f20b0fd-3cc8-42c0-af04-5942124c6b9e" class="">
+</p><p id="e6bffd88-9656-454d-9cd5-2bcb35876838" class="">※ Instruction Register: CPU내에서 처리할 명령어나 연산에 사용할 값이나 연산 결과를 일시적으로 기억하는 장치. 이 연산결과 등을 메모리에 저장하기도 함.</p><p id="d87e98d3-93cd-4f6b-87b3-2b42839ea29d" class="">
+</p><hr id="f9bd7534-18fd-4609-bb0b-06f161b603be"/><p id="63dfc4ee-026e-40e2-a09d-2004e7d77218" class="">
+</p><h3 id="d9f75010-933b-41a1-a528-d907f9b891f8" class="">Storage Sys.</h3><p id="413c2f5f-fc53-4ad5-86cc-278b1c93a6bb" class="">저장 용량과, 접근 시간(Access time)에 따라 구조적으로 구성됨. 운영체제는 이 저장 시스템들도 관리해주어야 함.</p><p id="96276d06-aa25-4b0f-9d59-a8390fd0915e" class="">
+</p><p id="d94894b2-cd77-407b-809c-6e385101a6ef" class="">🔥사진</p><p id="da2f1afa-ce23-4c19-b260-757f422ef2e1" class="">
+</p><p id="e1fdc49b-e73d-47e0-9347-9da7731b5dd4" class="">
+</p><hr id="cd020f12-18f2-4197-9ae2-c80bc2f00831"/><h3 id="4544e01d-d827-4a71-9073-6cf8551e9425" class="">Computer Sys. Components</h3><p id="c722f25c-e2c2-46f1-8dd1-1e31cbf10617" class="">이제는 시스템에 CPU와 메모리 한 개씩 있는 구조는 거의 존재치 않음. 아래와 같은 구성으로 이뤄짐. </p><ul id="19f93239-29c5-42fc-b0bb-01aab301f65d" class="bulleted-list"><li>CPU  (컴퓨터 시스템의 두뇌 역할을 하는 중앙처리장치)</li></ul><ul id="991bf96a-ab8a-4bf8-a239-512a6a2957f3" class="bulleted-list"><li>Processor </li></ul><ul id="7d1dacd6-ff9a-40fa-a77b-7c0e14738888" class="bulleted-list"><li>Core </li></ul><ul id="d5d3409f-d30d-4648-bb67-20c577c73b60" class="bulleted-list"><li>Multi Core </li></ul><ul id="17fc51ff-7e1d-4719-a992-f7e40b0acd93" class="bulleted-list"><li>Multi Processor  </li></ul><p id="aeb9c999-0ce1-4bf2-b63c-552314df4f24" class="">
+</p><p id="eda1c7bf-893a-4d6e-95d4-9d1f445df2c6" class=""><strong>SMP(Symmetric Multiprocessing)</strong></p><p id="866ea351-ea23-4ed2-be8c-ea4a3281b712" class="">메모리는 한 개인데, 여러 개 CPU가 각각의 register와 cache를 갖고 달려 있는 구조</p><p id="e73476c9-cadb-4633-ab5b-316028468094" class="">단점: 비용이 많이 듦</p><figure id="efbbb7f0-6ace-4d3d-8bf5-dbba0d1ae2b1" class="image"><a href="02%20%E1%84%8B%E1%85%AE%E1%86%AB%E1%84%8B%E1%85%A7%E1%86%BC%E1%84%8E%E1%85%A6%E1%84%8C%E1%85%A6%E1%84%8B%E1%85%B4%20%E1%84%80%E1%85%A2%E1%84%82%E1%85%A7%E1%86%B7%E1%84%80%E1%85%AA%20%E1%84%80%E1%85%AE%E1%84%8C%E1%85%A9%20efbbb7f06ace4d3d8bf5dbba0d1ae2b1/Untitled.png"><img style="width:558px" src="02%20%E1%84%8B%E1%85%AE%E1%86%AB%E1%84%8B%E1%85%A7%E1%86%BC%E1%84%8E%E1%85%A6%E1%84%8C%E1%85%A6%E1%84%8B%E1%85%B4%20%E1%84%80%E1%85%A2%E1%84%82%E1%85%A7%E1%86%B7%E1%84%80%E1%85%AA%20%E1%84%80%E1%85%AE%E1%84%8C%E1%85%A9%20efbbb7f06ace4d3d8bf5dbba0d1ae2b1/Untitled.png"/></a></figure><p id="8287999b-3a6d-4dc7-9e95-e6439d59e1e0" class="">
+</p><p id="95c1c7a3-05c8-4dfe-9de2-c914502d6403" class="">
+</p><p id="c3e0f8ec-5b66-4775-b1ab-6d006bd2e148" class=""><strong>Multi-Core Design</strong></p><p id="a6b513ab-d438-4c27-9cf2-1e8bc6aa7014" class="">SMP의 단점 해결을 위해 생성됨. 1개 CPU안에 CPU의 Core만 회로를 여러개로 구성. 이런 코어로 나눠진 것들이 또 여러개가 붙을 수 있음.</p><figure id="7d6570ca-7b82-443b-bfd5-a186c6ea771e" class="image"><a href="02%20%E1%84%8B%E1%85%AE%E1%86%AB%E1%84%8B%E1%85%A7%E1%86%BC%E1%84%8E%E1%85%A6%E1%84%8C%E1%85%A6%E1%84%8B%E1%85%B4%20%E1%84%80%E1%85%A2%E1%84%82%E1%85%A7%E1%86%B7%E1%84%80%E1%85%AA%20%E1%84%80%E1%85%AE%E1%84%8C%E1%85%A9%20efbbb7f06ace4d3d8bf5dbba0d1ae2b1/Untitled%201.png"><img style="width:384px" src="02%20%E1%84%8B%E1%85%AE%E1%86%AB%E1%84%8B%E1%85%A7%E1%86%BC%E1%84%8E%E1%85%A6%E1%84%8C%E1%85%A6%E1%84%8B%E1%85%B4%20%E1%84%80%E1%85%A2%E1%84%82%E1%85%A7%E1%86%B7%E1%84%80%E1%85%AA%20%E1%84%80%E1%85%AE%E1%84%8C%E1%85%A9%20efbbb7f06ace4d3d8bf5dbba0d1ae2b1/Untitled%201.png"/></a></figure><p id="8dff53f7-a8ec-408c-9723-a065dcfcca9f" class="">
+</p><p id="a3744fbf-578b-42dd-bf45-89b213c607aa" class="">
+</p><p id="f9fdaeb6-f723-4279-adbc-9464740e09e5" class="">🔥 <strong>MultiProgramming</strong> </p><p id="3f26d21e-9586-4eb9-810f-7758946f3a28" class="">프로그램을 한 개씩 로딩해서 메모리를 사용해왔지만, 지금은 여러개 프로그램을 메모리에 동시에 올려 동시에 실행. 이를 multiprogramming 이라고 부름.</p><figure class="block-color-purple_background callout" style="white-space:pre-wrap;display:flex" id="035a4dc7-723d-4e0a-b299-1adf4de85146"><div style="font-size:1.5em"><span class="icon">❓</span></div><div style="width:100%">왜 <strong>메모리에 프로세스가 동시에 올리는가? 
+
+1. </strong><span style="border-bottom:0.05em solid">CPU 사용 효율</span>을 높일 수 있음
+2. 이를 통해 <span style="border-bottom:0.05em solid">Multi tasking (=Multiprocessing)을 실현</span>할 수 있음.
+
+
+만약 업무가 워드 프로세서를 돌린다면, 100%의 CPU 중 2% 정도만 쓴다. 이때 만약 Youtube를 돌리면 남은 잔여 CPU로 그 이상을 쓸 수 있다.</div></figure><p id="be87f615-80d7-46c8-b86a-cbf417e70f33" class="">
+</p><p id="f616bb68-2e01-4d9f-b2b3-a7e73a9e0a1c" class="">이를 효율적으로 관리하기 위해, CPU Schduling 을 해야 한다. (이후 세부학습 예정)</p><p id="88bcf918-86d0-48d4-9ab4-33eb5e117c68" class="">
+</p><hr id="cae948aa-4e58-4699-9957-549abf683739"/><p id="821b7269-4977-4647-b15c-3f306185a9f4" class="">
+</p><h3 id="0c72f026-a70a-47d5-bcff-8cfc2d064bec" class="">운영체제의 2가지 듀얼 모드</h3><p id="88a0db42-16a0-4ab1-b97a-b4d3286bc72a" class="">각 프로그램이 다른 프로그램 실행 방해하거나, 충돌 방지 위한 보안 기법 필요.</p><p id="99406bc6-015b-4902-9bea-8474ce35dc89" class=""><strong>1. User Mode</strong></p><p id="7c44f37e-bd88-4330-8aca-2cfdf9f2483b" class="">애플리케이션의 동작. 직접적으로 하드웨어 처리 불가능. 제한적 명령 수행.</p><p id="7a44520e-d8ef-4f0b-aba9-c254ec9f4bd5" class=""><strong>2. Kernel Mode</strong></p><p id="3f3a0c19-5ceb-4490-a2c0-22548e023449" class="">애플리케이션의 충돌 등을 방지하고 Sys. call 처리. 직접적인 하드웨어 제어 수행. 시스템에 중요한 영향 미치는 연산은 커널모드에서만 실행.<strong> </strong><strong><span style="border-bottom:0.05em solid">컴퓨터에서 항상 실행되는 운영체제의 핵심.</span></strong></p><p id="408f1a87-d02e-460f-96c2-98d3d5df3d33" class="">
+</p><figure class="block-color-purple_background callout" style="white-space:pre-wrap;display:flex" id="04c67f4d-1224-45a1-b89e-a867acd16908"><div style="font-size:1.5em"><span class="icon">❓</span></div><div style="width:100%"><strong>이 두가지 모드를 구분하는 방법
+
+</strong>CPU 내부 모드 비트(mode bit)가<span style="border-bottom:0.05em solid"> 모두 0이면 커널 모드</span>. 모두<span style="border-bottom:0.05em solid"> 1이면 유저 모드.</span><strong>
+
+→ </strong>따라서 보안 관련 명령 수행할 땐, 항상 모드 비트를 조사해 모두 0일 경우만 그 명령을 수행. 프로세스는 수없이 유저모드와 커널모드를 반복하며 실행.</div></figure><p id="a293a8b4-5c26-4f31-bea3-ae0411dc5f0c" class="">
+</p><p id="8154363f-b711-4f7d-bf2d-1d97337c5b28" class="">
+</p><figure class="block-color-purple_background callout" style="white-space:pre-wrap;display:flex" id="5523a147-bd36-48ca-ae96-98629f249a75"><div style="font-size:1.5em"><span class="icon">❓</span></div><div style="width:100%"><strong>Sys. call 이란?</strong>
+: 사용자가 OS 인터페이스에 접근하려면 CLI(명령어 기반 인터페이스), GUI(마우스 기반 인터페이스), Touch-Screen(터치를 통한 인터페이스) 등을 통해 사용자가 인터페이스한다.
+
+
+그렇다면 <span style="border-bottom:0.05em solid">실제로 응용프로그램은 OS와 어떻게 인터페이스</span>하는가? 이에 대한 해답이 바로 Sys. call이다. Sys. call 함수를 직접 사용은 어려워 API로 호출해 처리한다. 즉, OS의 API가 Sys. call이라고 할 수 있다. 이를 갖고 사용자가 open, read, write한다. 일일이 open은 힘드니까, 라이브러리를 호출해 처리한다. 아래는 그의 예시이며, 앞으로 더 자세히 배울 것이다.</div></figure><p id="2e2e9fe7-ddbd-48ce-a562-4d86f3451175" class="">
+</p><p id="e8c112b2-3545-4e50-b782-193c7781e3bf" class=""><strong>윈도우, UNIX 시스템 콜</strong></p><figure id="151f4554-2583-43e5-a1e4-4ea2fb6aa678" class="image"><a href="02%20%E1%84%8B%E1%85%AE%E1%86%AB%E1%84%8B%E1%85%A7%E1%86%BC%E1%84%8E%E1%85%A6%E1%84%8C%E1%85%A6%E1%84%8B%E1%85%B4%20%E1%84%80%E1%85%A2%E1%84%82%E1%85%A7%E1%86%B7%E1%84%80%E1%85%AA%20%E1%84%80%E1%85%AE%E1%84%8C%E1%85%A9%20efbbb7f06ace4d3d8bf5dbba0d1ae2b1/Untitled%202.png"><img style="width:419px" src="02%20%E1%84%8B%E1%85%AE%E1%86%AB%E1%84%8B%E1%85%A7%E1%86%BC%E1%84%8E%E1%85%A6%E1%84%8C%E1%85%A6%E1%84%8B%E1%85%B4%20%E1%84%80%E1%85%A2%E1%84%82%E1%85%A7%E1%86%B7%E1%84%80%E1%85%AA%20%E1%84%80%E1%85%AE%E1%84%8C%E1%85%A9%20efbbb7f06ace4d3d8bf5dbba0d1ae2b1/Untitled%202.png"/></a></figure><p id="8fba6754-1c0b-40d9-b895-bec891fb828d" class="">
+</p><hr id="51918293-71ac-49f6-b19d-214b4ea9c26c"/><p id="788ed103-79e8-46ce-af81-49675872703a" class="">
+</p><h3 id="069cfdb1-e2af-4218-a340-b1068a65d457" class="">현대 컴퓨터 시스템</h3><p id="7b29627a-4cac-4d2e-8390-84b72c097a3d" class=""><strong>Virtualization (가상화)</strong></p><p id="f0a17d51-25a5-48b8-afc8-28fca4ad8184" class="">원래는 한 대의 컴퓨터에서 여러 프로세스(실행중인 프로그래밍)을 수행하는데, VMM(Virtual Machine Manager)을 하드웨어 위에 올려 여러 개의 OS를 갖고 OS 스케줄링을 하여 동시 OS 수행이 가능.</p><figure id="849a1f63-2c79-4437-9889-bc9d2a77a106" class="image"><a href="02%20%E1%84%8B%E1%85%AE%E1%86%AB%E1%84%8B%E1%85%A7%E1%86%BC%E1%84%8E%E1%85%A6%E1%84%8C%E1%85%A6%E1%84%8B%E1%85%B4%20%E1%84%80%E1%85%A2%E1%84%82%E1%85%A7%E1%86%B7%E1%84%80%E1%85%AA%20%E1%84%80%E1%85%AE%E1%84%8C%E1%85%A9%20efbbb7f06ace4d3d8bf5dbba0d1ae2b1/Untitled%203.png"><img style="width:524px" src="02%20%E1%84%8B%E1%85%AE%E1%86%AB%E1%84%8B%E1%85%A7%E1%86%BC%E1%84%8E%E1%85%A6%E1%84%8C%E1%85%A6%E1%84%8B%E1%85%B4%20%E1%84%80%E1%85%A2%E1%84%82%E1%85%A7%E1%86%B7%E1%84%80%E1%85%AA%20%E1%84%80%E1%85%AE%E1%84%8C%E1%85%A9%20efbbb7f06ace4d3d8bf5dbba0d1ae2b1/Untitled%203.png"/></a></figure><p id="8b4c3c31-accd-4f73-8695-c41675db96d9" class="">※ VMM: VMWare나 XemServer 등의 관리매니저</p><p id="a799dee3-3010-4846-8e87-8fef725b2b61" class="">
+</p><hr id="379a4bd0-99d2-4421-b405-1c9d5bc49cbe"/><p id="9418adb6-bfc5-4a9a-bf77-9360076404c1" class="">
+</p><h3 id="06495430-c25d-4191-8383-aace1f6f4248" class="">컴퓨팅 환경</h3><p id="66c6af69-ba34-4b90-a177-5ac025be3dd7" class="">OS는 컴퓨팅환경을 실행시킬 수 있도록 하는 환경을 제공하는 것에 그 의미가 있다.</p><p id="f25c0eee-52c9-4506-9524-85206a24999d" class="">
+</p><p id="8bfc5096-b19b-4818-a066-ff0b759524cf" class=""><strong>Client-Server 컴퓨팅</strong></p><p id="1e7d05a5-0c02-4cdc-857a-3d062bcf8899" class="">한개의 웹 서버에 네트워크를 통해, 여러 개의 클라이언트 데스크탑이 접근 (대표 예시:Wep)</p><p id="e106cbcf-25df-4632-ad6f-477770d0ab25" class="">
+</p><p id="a4f9b200-dfa0-44fe-820f-7337e8065b78" class=""><strong>Mobile 컴퓨팅</strong></p><p id="472dffae-3b4a-4953-a6a9-b63b5c2a0265" class="">휴대폰 운영체제 등이 존재, 활성화하기 시작</p><p id="66fb50d9-c8a5-44d0-9380-1a77afbd581b" class="">
+</p><p id="b8ad355d-4da5-41f9-8f0e-60c9cfa07cd8" class=""><strong>Peer-to-Peer 컴퓨팅</strong></p><p id="d0215a01-5adf-4aa4-81cd-9ebe348a8b08" class="">전통적인 운영체제(Client-Server 컴퓨팅)는, 한 개의 웹 서버에 여러 개 클라이언트가 접근하는 구조. 요즘은, 중앙 서버 없이도 컴퓨터가 운영됨.</p><p id="cf03e666-930e-45df-871f-b672a91e44b2" class="">
+</p><p id="79077ed7-2a97-4866-8411-fc006f923d79" class=""><strong>Cloud 컴퓨팅(=Edge 컴퓨팅)</strong></p><p id="c658cf46-a315-41cd-b3fd-14a5373d3cf9" class="">AWS, Azure, GCP 등 클라우드 서비스를 통해 서비스를 개발하기도 함.</p><p id="88b39a5f-87b5-4b6d-a633-f277fc61de86" class="">하드웨어 자원은 UI에 불과, 컴퓨팅 자원은 모두 클라우드에 존재. 클라우드에 서버, VM, Storage 등을 모두 들어가 있다. 우리는 그것을 터미널을 통해 클라우드가 제공하는 서비스를 활용</p><p id="f55253a5-8421-46da-9348-ed47c236aae2" class="">
+</p><hr id="6e3a6c35-714b-48bf-b9cb-e8a88b973172"/><p id="f013eb9d-7038-426b-b0af-6da4679eeba9" class="">
+</p><h2 id="79d52158-ff1b-4c46-a67a-74238e37f9af" class="">OS가 제공해주어야 할 것</h2><p id="62507498-b7ad-475b-88ac-0d4f20560782" class="">추후 개별 개념들에 대해 상세히 학습할 예정! 아자아자!</p><ol id="5ff3915f-fd9a-4d34-9f17-d00568e4df92" class="numbered-list" start="1"><li>프로그램 execution</li></ol><ol id="b5700de9-3c3e-4794-a583-b3c6bca52b2c" class="numbered-list" start="2"><li>메모리 매니지먼트</li></ol><ol id="c8570dcc-90ed-42b6-b215-ecab0c4de335" class="numbered-list" start="3"><li>파일 시스템</li></ol><ol id="47abebdf-9c6b-486a-a790-5bf2590fd0db" class="numbered-list" start="4"><li>Sys. call</li></ol><p id="4615459f-6422-4a67-84df-6cc1fc5c4592" class="">
+</p></div></article></body></html>
