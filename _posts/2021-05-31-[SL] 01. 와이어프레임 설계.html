@@ -1,0 +1,682 @@
+---
+layout: post
+title: "[SL] 01. 와이어프레임 설계"
+subtitle: "문제 정의, 요구사항 정의, 와이어프레임 설계"
+date: 2021-05-25 10:45:13
+background: '/img/posts/SLP_01_해상물류사진.jpg'
+categories: ['PROJECT_Smart Logistics','Total']
+---
+
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>와이어프레임 설계</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, YuMincho, "Yu Mincho", "Hiragino Mincho ProN", "Hiragino Mincho Pro", "Songti TC", "Songti SC", "SimSun", "Nanum Myeongjo", NanumMyeongjo, Batang, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, YuMincho, "Yu Mincho", "Hiragino Mincho ProN", "Hiragino Mincho Pro", "Songti TC", "Songti SC", "SimSun", "Nanum Myeongjo", NanumMyeongjo, Batang, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.highlight-default {
+}
+.highlight-gray {
+	color: rgb(155,154,151);
+}
+.highlight-brown {
+	color: rgb(100,71,58);
+}
+.highlight-orange {
+	color: rgb(217,115,13);
+}
+.highlight-yellow {
+	color: rgb(223,171,1);
+}
+.highlight-teal {
+	color: rgb(15,123,108);
+}
+.highlight-blue {
+	color: rgb(11,110,153);
+}
+.highlight-purple {
+	color: rgb(105,64,165);
+}
+.highlight-pink {
+	color: rgb(173,26,114);
+}
+.highlight-red {
+	color: rgb(224,62,62);
+}
+.highlight-gray_background {
+	background: rgb(235,236,237);
+}
+.highlight-brown_background {
+	background: rgb(233,229,227);
+}
+.highlight-orange_background {
+	background: rgb(250,235,221);
+}
+.highlight-yellow_background {
+	background: rgb(251,243,219);
+}
+.highlight-teal_background {
+	background: rgb(221,237,234);
+}
+.highlight-blue_background {
+	background: rgb(221,235,241);
+}
+.highlight-purple_background {
+	background: rgb(234,228,242);
+}
+.highlight-pink_background {
+	background: rgb(244,223,235);
+}
+.highlight-red_background {
+	background: rgb(251,228,228);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(55, 53, 47, 0.6);
+	fill: rgba(55, 53, 47, 0.6);
+}
+.block-color-brown {
+	color: rgb(100,71,58);
+	fill: rgb(100,71,58);
+}
+.block-color-orange {
+	color: rgb(217,115,13);
+	fill: rgb(217,115,13);
+}
+.block-color-yellow {
+	color: rgb(223,171,1);
+	fill: rgb(223,171,1);
+}
+.block-color-teal {
+	color: rgb(15,123,108);
+	fill: rgb(15,123,108);
+}
+.block-color-blue {
+	color: rgb(11,110,153);
+	fill: rgb(11,110,153);
+}
+.block-color-purple {
+	color: rgb(105,64,165);
+	fill: rgb(105,64,165);
+}
+.block-color-pink {
+	color: rgb(173,26,114);
+	fill: rgb(173,26,114);
+}
+.block-color-red {
+	color: rgb(224,62,62);
+	fill: rgb(224,62,62);
+}
+.block-color-gray_background {
+	background: rgb(235,236,237);
+}
+.block-color-brown_background {
+	background: rgb(233,229,227);
+}
+.block-color-orange_background {
+	background: rgb(250,235,221);
+}
+.block-color-yellow_background {
+	background: rgb(251,243,219);
+}
+.block-color-teal_background {
+	background: rgb(221,237,234);
+}
+.block-color-blue_background {
+	background: rgb(221,235,241);
+}
+.block-color-purple_background {
+	background: rgb(234,228,242);
+}
+.block-color-pink_background {
+	background: rgb(244,223,235);
+}
+.block-color-red_background {
+	background: rgb(251,228,228);
+}
+.select-value-color-default { background-color: rgba(206,205,202,0.5); }
+.select-value-color-gray { background-color: rgba(155,154,151, 0.4); }
+.select-value-color-brown { background-color: rgba(140,46,0,0.2); }
+.select-value-color-orange { background-color: rgba(245,93,0,0.2); }
+.select-value-color-yellow { background-color: rgba(233,168,0,0.2); }
+.select-value-color-green { background-color: rgba(0,135,107,0.2); }
+.select-value-color-blue { background-color: rgba(0,120,223,0.2); }
+.select-value-color-purple { background-color: rgba(103,36,222,0.2); }
+.select-value-color-pink { background-color: rgba(221,0,129,0.2); }
+.select-value-color-red { background-color: rgba(255,0,26,0.2); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="5020b7e0-c151-4e55-87d0-c19128b11a3a" class="page sans"><header><h1 class="page-title">와이어프레임 설계</h1></header><div class="page-body"><p id="3556445a-3eec-4cf6-8372-83525f24b84d" class="">와이어프레임을 설계해보았다. </p><p id="38c7b943-7ba9-4c26-9eed-8a64d9bfb787" class="">와이어프레임 설계란, 화면 설계라고도 한다. 선으로 이뤄진 화면 구조를 표현하는 문서를 작성한다고 보면 된다.</p><p id="8cf73d32-a8a3-4d78-86c8-0c75afa1d41d" class="">
+</p><p id="4d2cde0c-8586-44ad-b35d-8881929637fe" class="">우리 팀은 화면 설계를 하기 전, 아래와 같은 절차를 거쳤고, 거칠 예정이다.</p><p id="b3ffa18f-73df-403f-b8e1-c5c663ceb9f5" class="">
+</p><p id="3c7cf7de-59cc-4f07-9391-20a905eb7523" class="">크게는 아래와 같다. 물론 아래 순서를 모두 끝내면, DB도 설계하고 이것저것 더 해야 할 것은 많다.</p><p id="a0492dbe-d098-4eb5-9e0a-aff9f2e59c40" class="">
+</p><ol id="4d3c1809-c08a-48dd-aaa3-1bc961c6f3a0" class="block-color-gray_background numbered-list" start="1"><li>문제 정의</li></ol><ol id="a0565496-aa0e-4c53-9f30-0cc31cba2eb1" class="block-color-gray_background numbered-list" start="2"><li>요구사항 정의</li></ol><ol id="2dcc1bbb-3207-4897-b8a5-6ac324d7fe9b" class="block-color-gray_background numbered-list" start="3"><li>화면 설계</li></ol><ol id="3e856b9d-9359-4911-aaf4-4cdfd0de6490" class="block-color-gray_background numbered-list" start="4"><li>SRS 설계</li></ol><ol id="0fcb42d2-6cd1-47b3-8cca-a507b3fc3444" class="block-color-gray_background numbered-list" start="5"><li>WBS 설계</li></ol><ol id="611064d4-010b-4be0-a096-88ca51220aeb" class="block-color-gray_background numbered-list" start="6"><li>시스템 아키텍쳐 및 데이터 아키텍쳐 설계</li></ol><p id="440c6559-75a7-4d6f-861e-a6ebd82bd32e" class="">
+</p><p id="b3828528-62b9-402c-81d4-97dffde0a820" class="">
+</p><h3 id="f82dc81f-7917-43e7-9ab5-f9f804216181" class="">01. 문제 정의</h3><p id="b25c9a17-0cec-4c97-8154-fe0d1140e2fc" class="">가장 먼저, 우리는 문제를 정의했다. </p><blockquote id="ac07176c-f840-4a2c-be43-55c32a4d18f3" class="">우리는 해상물류 실시간 데이터 공유 플랫폼을 만들어야 한다. </blockquote><p id="15c34225-99c5-4118-b676-05ef10dbbb01" class="">만들어야 하는 근거와 문제점은, 계획서에 잘 정리해두었다. </p><p id="5e2b854b-cb13-4758-adca-142f572a8098" class="">간단하게 가장 큰 세 가지만 정리하자면, </p><p id="b884a230-6187-4f5a-92b2-b08289649324" class="">
+</p><ol id="4021b6ae-6e28-4d95-abda-f3c9c5bac942" class="numbered-list" start="1"><li><strong>기존 제공되는 Port-Mis는 가시성이 떨어지고 일차원적 정보만 제공한다.</strong></li></ol><ol id="19b6c0c6-1c90-49b5-abda-17c94a2ab9cd" class="numbered-list" start="2"><li><strong>데이터 공유 플랫폼이 여러 개로, 통합되지 않아, 이용자 관점에서 불편하다.</strong></li></ol><ol id="84299d25-3571-46f7-b14e-2acfc4f25503" class="numbered-list" start="3"><li><strong>데이터 기반 의사결정을 돕는 AI 모델은 일부 항만에만 도입돼 있다. 또한 범용적이지 못하다.</strong></li></ol><ol id="0d0dda7d-312e-4e3a-9b07-a52fc4743581" class="numbered-list" start="4"><li><strong>해상 물류 안전 문제가 이슈되는데, 안전 문제를 예방할 수 있도록 필요한 정보를 제때 제공해주어야 할 필요가 있다.</strong></li></ol><p id="85594f9a-0f53-4243-b2df-b9e33dcc787a" class="">
+</p><p id="e3214707-89ff-40c2-bb83-49829b28d654" class="">가 되겠다. 관련 자세한 설명은 아래 수행계획서에 기입해두었다.</p><figure id="b079e469-22e6-41b2-b16d-5b9420df5533"><a href="https://github.com/mynameis-sohee/Smart-Marine-Logistics-Project/blob/main/210330_%EC%8A%A4%EB%A7%88%ED%8A%B8%20%ED%95%B4%EC%83%81%EB%AC%BC%EB%A5%98%20ICT%EB%A9%98%ED%86%A0%EB%A7%81_%20%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8%20%EC%88%98%ED%96%89%EA%B3%84%ED%9A%8D%EC%84%9C.hwp" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">mynameis-sohee/Smart-Marine-Logistics-Project</div><div class="bookmark-description">You can&#x27;t perform that action at this time. You signed in with another tab or window. You signed out in another tab or window. Reload to refresh your session. Reload to refresh your session.</div></div><div class="bookmark-href"><img src="https://github.com/favicon.ico" class="icon bookmark-icon"/>https://github.com/mynameis-sohee/Smart-Marine-Logistics-Project/blob/main/210330_%EC%8A%A4%EB%A7%88%ED%8A%B8%20%ED%95%B4%EC%83%81%EB%AC%BC%EB%A5%98%20ICT%EB%A9%98%ED%86%A0%EB%A7%81_%20%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8%20%EC%88%98%ED%96%89%EA%B3%84%ED%9A%8D%EC%84%9C.hwp</div></div><img src="https://opengraph.githubassets.com/2a9b1e4ec613948774e5ba44dd65f8ccd31c04d21608e5567ae5ad2b3779bac6/mynameis-sohee/Smart-Marine-Logistics-Project" class="bookmark-image"/></a></figure><p id="186f6ff1-f87d-4d63-9f54-01b714bd9fe2" class="">
+</p><p id="5d73237f-0c27-4452-ae46-a77b56368d5f" class="">
+</p><h3 id="251b0ed3-8fda-4c7b-90d4-c18e966ee783" class="">02. 요구사항 정의</h3><p id="9990e423-9384-447b-82ee-f5dc2e49e3e1" class="">
+</p><p id="cbabb85f-3002-4711-b9a9-1437ca60f6b0" class="">위의 문제점을 해결하기 위한 서비스에 도입 되어야 할 기능을 정의해보았다.</p><p id="b35334c9-68b8-4780-83b0-e575d7d57b93" class="">대표적인 기능은, 1) <strong>실시간 선박 검색 및 위치 시각화,</strong> 2) <strong>정박 대기시간 예측 알고리즘</strong> 이 되겠다.</p><figure class="block-color-yellow_background callout" style="white-space:pre-wrap;display:flex" id="4678c550-cc70-4117-b226-b0b91e34a9a2"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%"><em><strong>01. 대시보드(실시간 데이터분석 시각화)
+</strong></em>
+<strong>정박지 현황 시각화 (예약상황, 신청상황 등)
+실시간 선박 위치 추적</strong>
+선박 클릭시 선박이름, 도착/출발 예정시간 표시
+터미널에 들어오는 선박에 대한 스케줄 조회
+
+<strong><em>02. 안전</em></strong>
+부두 시설상황 및 작업예정 부두 표시
+항만 일기예보 및 그날 상황에 따른 각별히 주의할 위험 요인
+
+<strong><em>03. ML 알고리즘</em></strong>
+<strong>시간대별 대기 상황 예측 및 시각화</strong>
+도착 예정 시간 예측
+
+<em><strong>04. 기타</strong></em>
+주요 사이트 즉시 접속 링크</div></figure><p id="7d9b3c94-0e21-4001-9013-4bc1b83c8005" class="">(04월 11일 회의록을 보면, 필요한 기능을 정리해 올려두었다.)</p><p id="d267096f-2371-4227-84a0-0c6143afa7b7" class="">
+</p><p id="9c054478-7be2-4406-aafe-572ccfc65dd8" class=""><span style="border-bottom:0.05em solid">문제를 정의하고, 기능을 정의하고, 기능의 타당성을 정의하고, 이것의 실현 가능성을 검토해보기까지 한 달은 꼬박 걸린 듯 하다. ^^;</span></p><p id="2b297dda-1188-4d21-b8ab-a2b9660f0495" class="">
+</p><p id="4c43fa15-15a9-4e89-b02a-9c6b52b0b2d5" class="">어쨌든, 우리는 우리가 타당성을 검증해보며 정의한 기능들을 대상으로, 화면 설계를 구성해보았다.</p><p id="a0362f4c-41b3-48b3-982c-aed99a4d44c7" class="">
+</p><p id="fce7c423-bff0-4d19-8603-3116fe4620f3" class="">
+</p><h3 id="dfac2a37-35be-4851-ba70-93c147853c6d" class="">03. 와이어프레임(화면) 설계</h3><p id="c1e7e430-4eb6-4eff-9164-00af6be34328" class="">화면설계는 총 <strong>4차례</strong>를 통해 수정되었고, 수정본은 아래와 같다. 05월 07일부터, 05월 25일까지 수정을 진행했다.</p><p id="5472b51e-c5af-40d6-a356-dc08fc0a9765" class="">
+</p><p id="4089464c-b54d-4e6b-ba35-44441f4b7da2" class="">처음에는 핀터레스트로 우리가 생각하는 느낌의 사진을 붙여 와, 뼈대를 세웠다.<strong> 처음에는 수정해야 할 것들이 많으므로 러프하게 시작, 점차 세분화했다. </strong></p><p id="1560fd01-1f40-434b-ac2b-3c41b4f7dce1" class="">그후, 상호 협의를 하며 필요한 기능과 요구사항을 하나씩 정의해 레이아웃을 구성했다.</p><p id="de550588-0442-4eef-a061-15da3a11e850" class="">
+</p><figure class="block-color-purple_background callout" style="white-space:pre-wrap;display:flex" id="3bc74370-0ee7-401c-a597-c17d453744ed"><div style="font-size:1.5em"><span class="icon">➡️</span></div><div style="width:100%">이걸 통해 느낀 점?
+
+<em><span style="border-bottom:0.05em solid">서로 같지만 다른 이야기를 하고 있다는 것</span></em><em>을 깨달았다.</em>
+
+확실히 같은 이야기를 하고, 같은 방향으로 논의를 한다고 생각했지만, 그렇지 않았다.
+
+따라서 개발 전, <span style="border-bottom:0.05em solid"><strong>개발해야할 것에 대해 모두가 한 방향, 한 목적으로 인지할 수 있도록 하는 것이 매우 중요함</strong></span>을 깨달았다.</div></figure><p id="b5d99241-56ca-47f1-ac55-907ef88d5119" class="">
+</p><h3 id="1ff71efa-4137-4ce5-91c2-8d6a3abb378d" class="">(부끄럽지만)우리의 첫 와이어 프레임 설계 일부</h3><figure id="933d5373-a0b1-4eb0-b294-78349fe52aa0" class="image"><a href="%E1%84%8B%E1%85%AA%E1%84%8B%E1%85%B5%E1%84%8B%E1%85%A5%E1%84%91%E1%85%B3%E1%84%85%E1%85%A6%E1%84%8B%E1%85%B5%E1%86%B7%20%E1%84%89%E1%85%A5%E1%86%AF%E1%84%80%E1%85%A8%20933d5373a0b14eb0b29478349fe52aa0/Untitled.png"><img style="width:477px" src="%E1%84%8B%E1%85%AA%E1%84%8B%E1%85%B5%E1%84%8B%E1%85%A5%E1%84%91%E1%85%B3%E1%84%85%E1%85%A6%E1%84%8B%E1%85%B5%E1%86%B7%20%E1%84%89%E1%85%A5%E1%86%AF%E1%84%80%E1%85%A8%20933d5373a0b14eb0b29478349fe52aa0/Untitled.png"/></a></figure><p id="b7d97ad6-113a-4a7f-9ce5-f936f571d178" class="">
+</p><p id="a938c453-e923-4166-81bd-f47f34e2f701" class="">
+</p><h3 id="f3588489-1e81-456a-b638-dfaef421bff1" class="">최종 와이어 프레임 설계 일부</h3><figure id="20051ff2-7955-4b8b-8ec1-8e8656d3d40f" class="image"><a href="%E1%84%8B%E1%85%AA%E1%84%8B%E1%85%B5%E1%84%8B%E1%85%A5%E1%84%91%E1%85%B3%E1%84%85%E1%85%A6%E1%84%8B%E1%85%B5%E1%86%B7%20%E1%84%89%E1%85%A5%E1%86%AF%E1%84%80%E1%85%A8%20933d5373a0b14eb0b29478349fe52aa0/Untitled%201.png"><img style="width:922px" src="%E1%84%8B%E1%85%AA%E1%84%8B%E1%85%B5%E1%84%8B%E1%85%A5%E1%84%91%E1%85%B3%E1%84%85%E1%85%A6%E1%84%8B%E1%85%B5%E1%86%B7%20%E1%84%89%E1%85%A5%E1%86%AF%E1%84%80%E1%85%A8%20933d5373a0b14eb0b29478349fe52aa0/Untitled%201.png"/></a></figure><p id="ef4b6bb3-8606-4a29-b3b3-467e7cd2509e" class="">
+</p><p id="3e271589-06d9-4b53-868f-03e4502de4f9" class="">파일은 깃허브에 업로드 해두었으니 아래 링크를 참고!</p><p id="ede768ae-2164-48bd-b6b9-2b8e9043304b" class="">
+</p><figure id="6634e7ec-7fa8-4822-876a-d7c3198d21f7"><a href="https://github.com/mynameis-sohee/Smart-Marine-Logistics-Project/blob/main/%EC%99%80%EC%9D%B4%EC%96%B4%ED%94%84%EB%A0%88%EC%9E%84%20%EC%84%A4%EA%B3%84/210509-%ED%99%94%EB%A9%B4%EC%84%A4%EA%B3%84%EC%84%9C_ver04.pdf" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title"></div></div><div class="bookmark-href"><img src="https://github.com/favicon.ico" class="icon bookmark-icon"/>https://github.com/mynameis-sohee/Smart-Marine-Logistics-Project/blob/main/%EC%99%80%EC%9D%B4%EC%96%B4%ED%94%84%EB%A0%88%EC%9E%84%20%EC%84%A4%EA%B3%84/210509-%ED%99%94%EB%A9%B4%EC%84%A4%EA%B3%84%EC%84%9C_ver04.pdf</div></div></a></figure><p id="47d5d2d0-c0c0-49b6-8490-0f6143b8b9a8" class="">
+</p><p id="67df0538-96c0-4e23-b3a4-16cb24337281" class="">멘토님께서, 많이 좋아졌다고 칭찬해주셔서 얼마나 뿌듯했는지 모른다 ㅎㅎ 어제 드디어 컨펌을 받았다. 최종 pdf 깔끔하게 정리해준 팀원 동민오빠에게 감사를 표하며 와이어프레임 마무리!</p><p id="46202091-fd12-4301-9641-1e5852363589" class="">
+</p><p id="cdb1b37c-8cd2-4263-902b-312d1e804234" class="">이렇게 화면설계까지 마무리했고, 이어 SRS까지 설계해보았다. 이는 다음 포스팅에서 다뤄보도록 하겠다!</p></div></article></body></html>
